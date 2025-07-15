@@ -1,0 +1,85 @@
+# === GLOBAL ===
+.env
+*.env
+*.log
+*.sqlite3
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# === FRONTEND (React - client/) ===
+client/node_modules/
+client/build/
+client/.env
+client/.next/
+client/dist/
+client/coverage/
+client/.parcel-cache/
+client/.eslintcache
+
+# React Native (if used in the future)
+*.gradle
+*.apk
+*.keystore
+*.hprof
+
+# === BACKEND (Flask - server/) ===
+server/__pycache__/
+server/instance/
+server/*.pyc
+server/.env
+server/.pytest_cache/
+server/.mypy_cache/
+server/.coverage
+server/htmlcov/
+server/venv/
+server/env/
+server/.tox/
+server/.pylint.d/
+server/.vscode/
+server/.DS_Store
+
+# === PYTHON VENV ===
+env/
+venv/
+ENV/
+.venv/
+.pdm-python/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# === PYTEST ===
+.cache
+.tox
+coverage.xml
+*.cover
+.hypothesis/
+
+# === JEST (frontend testing) ===
+client/coverage/
+client/junit.xml
+
+# === DATABASE ===
+*.sqlite
+*.db
+
+# === GITHUB ACTIONS / DEPLOY ===
+*.pem
+*.key
+
+# === MISC ===
+*.bak
+*.tmp
+*.log
+*.tgz
+*.tar.gz
+
+# === DOCKER (if used) ===
+*.container
+*.pid
+*.sock
+docker-compose.override.yml

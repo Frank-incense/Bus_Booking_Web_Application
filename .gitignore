@@ -1,85 +1,71 @@
-# === GLOBAL ===
-.env
-*.env
-*.log
-*.sqlite3
-*.pyc
+# Byte-compiled / cache files
 __pycache__/
-.DS_Store
-Thumbs.db
-.idea/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+
+# VS Code or other IDE settings
 .vscode/
+.idea/
 *.swp
 
-# === FRONTEND (React - client/) ===
-client/node_modules/
-client/build/
-client/.env
-client/.next/
-client/dist/
-client/coverage/
-client/.parcel-cache/
-client/.eslintcache
+# Environment variables
+.env
+.env.*
 
-# React Native (if used in the future)
-*.gradle
-*.apk
-*.keystore
-*.hprof
-
-# === BACKEND (Flask - server/) ===
-server/__pycache__/
-server/instance/
-server/*.pyc
-server/.env
-server/.pytest_cache/
-server/.mypy_cache/
-server/.coverage
-server/htmlcov/
-server/venv/
-server/env/
-server/.tox/
-server/.pylint.d/
-server/.vscode/
-server/.DS_Store
-
-# === PYTHON VENV ===
-env/
-venv/
-ENV/
-.venv/
-.pdm-python/
-pip-log.txt
-pip-delete-this-directory.txt
-
-# === PYTEST ===
-.cache
-.tox
-coverage.xml
-*.cover
-.hypothesis/
-
-# === JEST (frontend testing) ===
-client/coverage/
-client/junit.xml
-
-# === DATABASE ===
-*.sqlite
+# SQLite (if using for dev)
+*.sqlite3
 *.db
 
-# === GITHUB ACTIONS / DEPLOY ===
-*.pem
-*.key
+# Flask instance folder
+instance/
 
-# === MISC ===
-*.bak
-*.tmp
+# Pytest / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# PyInstaller
+*.manifest
+*.spec
+
+# MyPy / Pylint / Bandit
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.pylint.d/
+.bandit/
+
+# Logs
 *.log
-*.tgz
-*.tar.gz
 
-# === DOCKER (if used) ===
-*.container
-*.pid
-*.sock
-docker-compose.override.yml
+# Alembic (migration versions, keep folder but ignore generated files)
+migrations/versions/*.pyc
+migrations/versions/*.pyo
+
+# Mac OS
+.DS_Store
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Dist / packaging
+dist/
+build/
+*.egg-info/
+
+# System files
+Thumbs.db
+ehthumbs.db

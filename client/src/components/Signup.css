@@ -1,57 +1,184 @@
-.signup-container {
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fc;
   font-family: Arial, sans-serif;
 }
 
-.signup-container h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
+.signup-container {
+  max-width: 430px;
+  margin: 60px auto;
+  padding: 40px 36px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 }
 
-.signup-container form {
+.header-section {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.logo-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 36px;
+  height: 36px;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.subtext {
+  font-size: 14px;
+  color: #555;
+  font-weight: 400;
+  margin-bottom: 18px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  width: 100%;
+  padding: 14px;
+  border-radius: 18px;
+  border: none;
+  font-size: 15px;
+  background-color: #e4f0ff;
+  outline: none;
+  margin-bottom: 14px;
+}
+
+form input::placeholder {
+  color: #888;
+}
+
+form input:focus {
+  border: 2px solid #007bff;
+  background-color: #e4f0ff;
+}
+
+.upload-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.upload-group {
+  width: 48%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
-.signup-container input {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.upload-label {
   font-size: 14px;
-  transition: border-color 0.2s ease-in-out;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
 }
 
-.signup-container input:focus {
-  border-color: #007bff;
-  outline: none;
+.upload-box {
+  height: 120px;
+  border-radius: 16px;
+  background-color: #e4f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border: none;
+  transition: background-color 0.3s;
 }
 
-.signup-container button {
-  padding: 12px;
+.upload-box input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.upload-icon {
+  background-image: url('/iconimage.png');
+  background-size: 36px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  z-index: 2;
+}
+
+.remember-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #222;
+  margin-bottom: 22px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 18px;
   background-color: #007bff;
   color: white;
-  border: none;
-  border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
-.signup-container button:hover {
+button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-.form-message {
-  margin-top: -10px;
+.login-link {
+  font-size: 13px;
+  margin-top: 24px;
+  text-align: left;
+  color: #666;
+  font-weight: 400;
+  line-height: 1.6;
+  padding-left: 2px;
+}
+
+.login-link a {
   color: #007bff;
-  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 4px;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+  color: #0056b3;
 }

@@ -1,0 +1,389 @@
+/* General Body and Container Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Match Navbar background */
+}
+
+.home-container {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Journey Hub Intro Section */
+.journey-hub-intro {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #fff; /* Match Navbar right button background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: -80px;
+    position: relative;
+    z-index: 10;
+    border-radius: 8px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.journey-hub-intro .star-rating {
+    color: #ffd700;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.journey-hub-intro h1 {
+    color: #007bff; /* Match Navbar primary blue */
+    font-size: 2.8em;
+    margin: 10px 0;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.journey-hub-intro p {
+    color: #333; /* Match Navbar text */
+    font-size: 1.1em;
+    margin-top: 5px;
+}
+
+/* Search Bar Section */
+.search-bar-section {
+    background-color: #fff;
+    padding: 30px 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.search-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.input-group {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9em;
+    color: #007bff; /* Match Navbar blue */
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #007bff; /* Match Navbar blue */
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+}
+
+.input-group input:focus {
+    border-color: #0056b3; /* Navbar join hover */
+    outline: none;
+}
+
+.input-group .clear-input {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    color: #999;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.date-input-group input[type="date"] {
+    position: relative;
+    padding-right: 35px;
+}
+
+/* Custom Date Picker Placeholder */
+.date-picker-placeholder {
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.date-picker-placeholder span {
+    color: #333;
+}
+
+.date-picker-placeholder .fa {
+    color: #666;
+}
+
+.search-button,
+.view-all-routes-button {
+    background-color: #007bff; /* Match Navbar join button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 12px 30px;
+    font-weight: 600;
+}
+
+.search-button:hover,
+.view-all-routes-button:hover {
+    background-color: #0056b3; /* Match Navbar join hover */
+}
+
+/* Popular Routes Section */
+.popular-routes-section {
+    background-color: #e6f0ff;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.popular-routes-section h2 {
+    color: #007bff; /* Match Navbar blue */
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.popular-routes-section p {
+    color: #333; /* Match Navbar text */
+    font-size: 1em;
+    margin-bottom: 30px;
+}
+
+.routes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.route-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.2s ease;
+}
+
+.route-card:hover {
+    transform: translateY(-5px);
+}
+
+.route-card .route-header h3 {
+    color: #007bff; /* Match Navbar blue */
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.route-card .route-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.route-card .profile-pic-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #007bff; /* Match Navbar blue */
+}
+
+.route-card .profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.route-card .route-details span {
+    color: #333;
+    font-size: 0.95em;
+}
+
+.view-all-routes-button {
+    background-color: #007bff; /* Match Navbar join */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 40px;
+}
+
+.view-all-routes-button:hover {
+    background-color: #0056b3; /* Match Navbar join hover */
+}
+
+/* Footer Section */
+.footer-section {
+    background-color: #333; /* Match Navbar text color for contrast */
+    color: white;
+    padding: 50px 20px;
+}
+
+.footer-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px;
+}
+
+.footer-column h4 {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #007bff; /* Match Navbar blue */
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #e3f2fd;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Social Icons in Footer */
+.footer-column.social-icons {
+    display: flex;
+    gap: 20px;
+    font-size: 1.8em;
+    align-items: flex-start;
+    color: #007bff; /* Match Navbar blue */
+}
+
+.footer-column.social-icons .fa {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.footer-column.social-icons .fa:hover {
+    color: #fff;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .journey-hub-intro {
+        margin-top: -50px;
+        padding: 20px 15px;
+    }
+
+    .journey-hub-intro h1 {
+        font-size: 2em;
+    }
+
+    .journey-hub-intro p {
+        font-size: 1em;
+    }
+
+    .search-inputs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-group {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .routes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-columns {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .footer-column.social-icons {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-column ul {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        height: 300px;
+    }
+
+    .journey-hub-intro {
+        padding: 15px 10px;
+        margin-top: -40px;
+    }
+
+    .journey-hub-intro h1 {
+        font-size: 1.5em;
+    }
+
+    .journey-hub-intro .star-rating {
+        font-size: 1.5em;
+    }
+
+    .popular-routes-section {
+        padding: 20px 10px;
+    }
+
+    .popular-routes-section h2 {
+        font-size: 1.5em;
+    }
+}

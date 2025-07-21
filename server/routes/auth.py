@@ -62,3 +62,16 @@ def login():
         'access_token': token,
         'user': user.to_dict()
     }), 200
+
+##get current user
+
+@auth_bp.route('/api/me', methods=['GET'])
+@jwt_required()
+def me():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    return jsonify({'user': user.to_dict()}), 200

@@ -75,3 +75,12 @@ def me():
         return jsonify({'error': 'User not found'}), 404
 
     return jsonify({'user': user.to_dict()}), 200
+
+##logout user
+
+@auth_bp.route('/api/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    response = jsonify({'message': 'Successfully logged out'})
+    unset_jwt_cookies(response)
+    return response, 200

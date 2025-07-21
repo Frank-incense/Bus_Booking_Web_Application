@@ -39,3 +39,26 @@ def register():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
+    
+##Login user
+
+@auth_bp.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({'error': 'Email and password are required'}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user or not user.authenticate(password):
+        return jsonify({'error': 'Invalid email or password'}), 401
+
+    token = create_access_token(identity=user.id)
+
+    return jsonify({
+        'message': 'Login successful',
+        'access_token': token,
+        'user': user.to_dict()
+    }), 200

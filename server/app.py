@@ -6,6 +6,8 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from flask_cors import CORS
 from server.config import db 
+from server.routes.auth import auth_bp
+
 
 
 load_dotenv()
@@ -18,4 +20,5 @@ migrate = Migrate(app=app, db=db)
 bcrypt = Bcrypt(app=app)
 jwt = JWTManager(app=app)
 api = Api(app=app)
+app.register_blueprint(auth_bp)
 

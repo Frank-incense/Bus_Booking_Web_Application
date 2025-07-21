@@ -80,6 +80,7 @@ def me():
 
 @auth_bp.route('/api/logout', methods=['POST'])
 @jwt_required()
+
 def logout():
     response = jsonify({'message': 'Successfully logged out'})
     unset_jwt_cookies(response)

@@ -2,6 +2,7 @@ from server.config import db
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import Column, Integer, String, DateTime, func, Boolean
 from sqlalchemy.orm import relationship, validates
+
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import Enum
 
@@ -20,6 +21,7 @@ class User(db.Model, SerializerMixin):
     role = Column(Enum(*ROLES, name='user_roles'), nullable=False)
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
+
 
     serialize_rules = ()
     serialize_only = ()

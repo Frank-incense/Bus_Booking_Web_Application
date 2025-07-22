@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -15,6 +14,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+
       },
       {
         path: "login",

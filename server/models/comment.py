@@ -14,6 +14,8 @@ class Comment(db.Model, SerializerMixin):
     rating = Column(Integer(), nullable=False)
     customer_id = Column(Integer(), ForeignKey('customers.id'))
     operator_id = Column(Integer(), ForeignKey('operators.id'))
+    created_at = Column(DateTime(), server_default=func.now())
+    updated_at = Column(DateTime(), onupdate=func.now())
 
     def __repr__(self):
         return f"Comment: {self.id}, {self.comment}"

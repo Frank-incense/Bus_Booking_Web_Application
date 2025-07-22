@@ -2,6 +2,7 @@ from server.config import db
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import Column, Integer, String, DateTime, func, Boolean
 from sqlalchemy.orm import relationship, validates
+
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import Enum
 
@@ -21,30 +22,30 @@ class User(db.Model, SerializerMixin):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
+
     serialize_rules = ()
     serialize_only = ()
     
     def __repr__(self):
-        return f"User: {self.id}, {self.name}."
-    
+        return f"<User {self.id}: {self.name}>"
+
     @hybrid_property
     def password_hash(self):
-        raise AttributeError('Cannot access this value')
-    
+        raise AttributeError("Password hash is write-only.")
+
     @password_hash.setter
     def password_hash(self, value):
         from server.app import bcrypt
-        password_hash = bcrypt.generate_password_hash(value.encode('utf-8'))
-        self._password_hash = password_hash.decode('utf-8')
+        hashed = bcrypt.generate_password_hash(value.encode('utf-8'))
+        self._password_hash = hashed.decode('utf-8')
 
     def authenticate(self, password):
         from server.app import bcrypt
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
-    
+
     @validates('role')
     def validate_role(self, key, value):
-        if value is 'Driver' or value is 'Admin':
-            return value
-        
-        raise ValueError('Role can only be Driver or Admin')
-        
+        allowed_roles = ['Driver', 'Admin']
+        if value not in allowed_roles:
+            raise ValueError(f"Role must be one of {allowed_roles}")
+        return value

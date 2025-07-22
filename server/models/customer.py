@@ -6,8 +6,8 @@ from sqlalchemy.orm import relationship, validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy import Enum
 
-class Comment(db.Model, SerializerMixin):
-    __tablename__ = 'comments'
+class Customer(db.Model, SerializerMixin):
+    __tablename__ = 'customers'
 
     id = Column(Integer(), primary_key=True)
     first_name = Column(String(), nullable=False)

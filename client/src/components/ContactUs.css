@@ -1,0 +1,158 @@
+.contact-container {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Hero Section */
+.contact-hero {
+  background-color: #333;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* Contact Icons */
+.contact-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 40px 20px;
+  background: #f9f9f9;
+}
+
+.contact-icon {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  text-align: center;
+  margin: 10px;
+}
+
+/* Contact Form */
+.contact-form-section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.contact-form button {
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+/* Locations */
+.contact-locations {
+  padding: 50px 20px;
+  text-align: center;
+  background: #f1f1f1;
+}
+
+.location-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.location-card {
+  width: 200px;
+}
+
+.location-image {
+  background-color: #ccc;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+/* Testimonial */
+.testimonial-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #fff;
+}
+
+.testimonial-image {
+  background-color: #ddd;
+  height: 180px;
+  width: 180px;
+  margin: 0 auto 20px;
+}
+
+blockquote {
+  font-style: italic;
+  margin: 10px auto;
+  max-width: 600px;
+}
+
+.testimonial-author {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Newsletter */
+.newsletter-section {
+  padding: 40px 20px;
+  text-align: center;
+  background: #f9f9f9;
+}
+
+.newsletter-form {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.newsletter-form button {
+  padding: 8px 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: white;
+  padding: 40px 20px;
+}
+
+.footer-cols {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-cols div {
+  flex: 1;
+  min-width: 150px;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: #aaa;
+}

@@ -4,20 +4,21 @@ from sqlalchemy import Column, Integer, String, DateTime, func, Boolean, Foreign
 from sqlalchemy.orm import relationship, validates
 
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import Enum
 
-class Route(db.Model, SerializerMixin):
-    __tablename__ = 'routes'
+
+class Operator(db.Model, SerializerMixin):
+    __tablename__ = 'operators'
 
     id = Column(Integer(), primary_key=True)
-    origin = Column(String(), nullable=False)
-    destination = Column(String(), nullable=False)
-    distance = Column(Integer())
+    operator = Column(String(), nullable=False)
+    image_url = Column(String())
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
-    trips = relationship('Trip', back_populates='route')
+    comments = relationship('Comment', back_populates='operator')
 
-    serialize_rules = ('-trips.route',)
-
+    serialize_rules = ('-comments.operator',)
+    
     def __repr__(self):
-        return f"Booking: {self.id}, {self.origin} to {self.destination}"
+        return f"Operator, {self.id} {self.operator}"

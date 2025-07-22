@@ -17,6 +17,11 @@ class Comment(db.Model, SerializerMixin):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
+    customer = relationship('Customer', back_populates='comments')
+    operator = relationship('Operator', back_populates='comments')
+
+    serialize_rules = ('-customer.comments', '-operator.comments')
+    
     def __repr__(self):
         return f"Comment: {self.id}, {self.comment}"
     

@@ -22,9 +22,18 @@ class User(db.Model, SerializerMixin):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
-
-    serialize_rules = ()
-    serialize_only = ()
+    buses = relationship('Bus', back_populates='users')
+    
+    serialize_rules = ('-buses.users',)
+    serialize_only = (
+        'id', 
+        'name', 
+        'email', 
+        'image_url', 
+        'is_approved',
+        'role',
+        'created_at',
+        'updated_at',)
     
     def __repr__(self):
         return f"<User {self.id}: {self.name}>"

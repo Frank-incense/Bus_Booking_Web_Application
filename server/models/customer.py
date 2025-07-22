@@ -19,5 +19,10 @@ class Customer(db.Model, SerializerMixin):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
+    comments = relationship('Comment', back_populates='customer')
+    bookings = relationship('Booking', back_populates='customer')
+
+    serialize_rules = ('-comments.customer', '-bookings.customer',)
+
     def __repr__(self):
         return f"Customer {self.id}, {self.first_name}"

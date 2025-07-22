@@ -21,5 +21,11 @@ class Bus(db.Model, SerializerMixin):
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
+    user = relationship('User', back_populates='buses')
+    operator = relationship('Operator', back_populates='buses')
+    trips = relationship('Trip', back_populates='bus')
+    
+    serialize_rules = ('-user.buses', '-operator.buses', '-trips.bus',)
+
     def __repr__(self):
         return f"Bus, {self.id} {self.registration}"

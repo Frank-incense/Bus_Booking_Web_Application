@@ -9,14 +9,14 @@ const Navbar = () => {
         <img src="/logo.png" alt="Logo" className="logo" />
         <nav className="nav-links">
           <Link to="/">Home</Link>
-          <a href="#">About Us</a>
-          <a href="#">Contact Us</a>
+          <Link to="/about">About Us</Link>
+          <Link to="/contact">Contact Us</Link>
           <div className="dropdown">
             <button className="dropbtn">Services ▼</button>
             <div className="dropdown-content">
-              <a href="#">Service 1</a>
-              <a href="#">Service 2</a>
-              <a href="#">Service 3</a>
+              <Link to="/service1">Bus-Hiring Services</Link>
+              <Link to="/service2">Parcel Services</Link>
+              
             </div>
           </div>
         </nav>

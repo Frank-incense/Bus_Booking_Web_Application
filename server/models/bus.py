@@ -13,7 +13,7 @@ class Bus(db.Model, SerializerMixin):
 
     id = Column(Integer(), primary_key=True)
     registration = Column(String(), nullable=False)
-    user_id = Column(Integer(), ForeignKey())
+    user_id = Column(Integer(), ForeignKey('users.id'))
     operator_id = Column(Integer(), ForeignKey())
     no_of_seats = Column(Integer(), nullable=False)
     image_url = Column(String())

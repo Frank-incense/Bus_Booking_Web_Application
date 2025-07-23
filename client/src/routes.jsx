@@ -3,7 +3,6 @@ import { AuthContext } from "./context/AuthContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import LoginForm from "./components/LoginForm";
-import Signup from "./components/Signup";
 import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import Hiring from "./components/Hiring";

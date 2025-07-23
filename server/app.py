@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 from flask_cors import CORS
-from server.config import db 
+from server.config import db
 import cloudinary
 from server.controllers import addResource
 from server.routes.auth import auth_bp

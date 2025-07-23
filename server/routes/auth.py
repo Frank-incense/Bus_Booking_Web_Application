@@ -42,20 +42,40 @@ def register():
     
 ##Login user
 
+import logging
+
 @auth_bp.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
 
+    logging.info(f"Login attempt for email: {email}")
+
     if not email or not password:
+        logging.warning("Login failed: Email and password are required")
         return jsonify({'error': 'Email and password are required'}), 400
 
     user = User.query.filter_by(email=email).first()
-    if not user or not user.authenticate(password):
+    if not user:
+        logging.warning(f"Login failed: User with email {email} not found")
         return jsonify({'error': 'Invalid email or password'}), 401
 
+    if not user.authenticate(password):
+        logging.warning(f"Login failed: Incorrect password for email {email}")
+        return jsonify({'error': 'Invalid email or password'}), 401
+
+    if not user.is_approved:
+        logging.warning(f"Login failed: User {email} not approved")
+        return jsonify({'error': 'User not approved'}), 403
+
+    if not user.is_active:
+        logging.warning(f"Login failed: User {email} not active")
+        return jsonify({'error': 'User not active'}), 403
+
     token = create_access_token(identity=user.id)
+
+    logging.info(f"Login successful for email: {email}")
 
     return jsonify({
         'message': 'Login successful',

@@ -65,6 +65,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1rem;
+  color: #666;
 }
 
 /* Team Section */
@@ -97,15 +99,26 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   text-align: center;
+
+  /* Ensure vertical centering */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .team-image {
   height: 120px;
+  width: 120px;
   background-color: #ddd;
+  border-radius: 50%; /* Optional circular placeholder */
   margin-bottom: 15px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.8rem;
+  color: #666;
 }
 
 .team-card h4 {

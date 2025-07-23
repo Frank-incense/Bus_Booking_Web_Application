@@ -9,9 +9,10 @@ const initialBookedSeats = new Set(['1B', '2B', '3B']); // Example booked seats
 
 const BusBooking = ({ operator = 'Easy Coach', departure = '07:00 Nairobi', arrival = '04:00 Kisumu', onClose }) => {
   const [selectedSeats, setSelectedSeats] = useState(new Set());
+  const [bookedSeats, setBookedSeats] = useState(initialBookedSeats);
 
   const toggleSeat = (seat) => {
-    if (initialBookedSeats.has(seat)) return;
+    if (bookedSeats.has(seat)) return;
     const newSelectedSeats = new Set(selectedSeats);
     if (newSelectedSeats.has(seat)) {
       newSelectedSeats.delete(seat);
@@ -23,9 +24,18 @@ const BusBooking = ({ operator = 'Easy Coach', departure = '07:00 Nairobi', arri
 
   const totalFare = selectedSeats.size * pricePerSeat;
 
+  const handleBookSeats = () => {
+    if (selectedSeats.size === 0) return;
+    alert('Seats booked successfully!');
+    const newBookedSeats = new Set(bookedSeats);
+    selectedSeats.forEach(seat => newBookedSeats.add(seat));
+    setBookedSeats(newBookedSeats);
+    setSelectedSeats(new Set());
+  };
+
   const renderSeat = (row, col) => {
     const seatLabel = `${row}${String.fromCharCode(65 + col)}`;
-    const isBooked = initialBookedSeats.has(seatLabel);
+    const isBooked = bookedSeats.has(seatLabel);
     const isSelected = selectedSeats.has(seatLabel);
 
     let seatClass = 'seat empty-seat';
@@ -85,7 +95,7 @@ const BusBooking = ({ operator = 'Easy Coach', departure = '07:00 Nairobi', arri
           <p>Selected seats: {selectedSeats.size}</p>
           <p>Price per seat: {pricePerSeat}</p>
           <p>Total Fare: {totalFare}</p>
-          <button className="book-seats-button" disabled={selectedSeats.size === 0}>
+          <button className="book-seats-button" disabled={selectedSeats.size === 0} onClick={handleBookSeats}>
             Book seats
           </button>
         </div>

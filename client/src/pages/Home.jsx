@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import './Home.css'; // Assuming you'll have a Home.css for styling
 
 // Placeholder for an icon component if you have one

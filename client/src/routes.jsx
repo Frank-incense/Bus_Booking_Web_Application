@@ -8,7 +8,8 @@ import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import Hiring from "./components/Hiring";
 import Parcel from "./components/Parcel";
-
+import Signup from "./components/Signup";
+import AdminDashboard from "./pages/AdminDashboard"; 
 
 const router = createBrowserRouter([
   {
@@ -45,7 +46,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/admin", 
+    element: <AdminDashboard />,
+  },
 ]);
 
 export default router;
-  

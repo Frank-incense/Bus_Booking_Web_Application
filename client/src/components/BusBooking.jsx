@@ -5,8 +5,7 @@ const seatRows = 10;
 const seatColumns = 4;
 const pricePerSeat = 1750;
 
-const initialBookedSeats = new Set(["1B", "2B", "3B"]); // Example booked seats
-
+const initialBookedSeats = new Set(["1B", "2B", "3B"]);
 const BusBooking = ({
   operator = "Easy Coach",
   departure = "07:00 Nairobi",
@@ -47,8 +46,13 @@ const BusBooking = ({
     const isSelected = selectedSeats.has(seatLabel);
 
     let seatClass = "seat empty-seat";
-    if (isBooked) seatClass = "seat booked-seat";
-    if (isSelected) seatClass = "seat selected-seat";
+    if (seatLabel === "DR") {
+      seatClass = "seat driver-seat";
+    } else if (isBooked) {
+      seatClass = "seat booked-seat";
+    } else if (isSelected) {
+      seatClass = "seat selected-seat";
+    }
 
     return (
       <div
@@ -59,6 +63,7 @@ const BusBooking = ({
           toggleSeat(seatLabel);
         }}
         title={seatLabel}
+        style={seatLabel === "DR" ? { backgroundColor: "red", color: "white", fontWeight: "bold", cursor: "default" } : {}}
       >
         {seatLabel}
       </div>
@@ -120,6 +125,11 @@ const BusBooking = ({
             </div>
             <div>
               <div className="seat selected-seat"></div> Selected seat
+            </div>
+            <div>
+              <div className="seat driver-seat" style={{backgroundColor: 'red', color: 'white', fontWeight: 'bold', cursor: 'default', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
+                DR
+              </div> Driver seat
             </div>
           </div>
           <div className="seats-grid">{renderSeatsGrid()}</div>

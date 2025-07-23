@@ -13,14 +13,14 @@ class User(db.Model, SerializerMixin):
 
     id = Column(Integer(), primary_key=True)
     name = Column(String(), nullable=False)
-    email = Column(String(), unique=True, nullable=False)
+    email = Column(String(), unique=True)
     phone = Column(String(), unique=True)
     _password_hash = Column(String() ) 
     image_url = Column(String())
     license = Column(String())
     is_approved = Column(Boolean(), default=False)
     is_active = Column(Boolean(), default=False)
-    role = Column(Enum(*ROLES, name='user_roles'), nullable=False)
+    role = Column(Enum(*ROLES, name='user_roles'))
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 

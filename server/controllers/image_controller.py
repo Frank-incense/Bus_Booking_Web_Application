@@ -1,33 +1,33 @@
 import cloudinary.uploader
-from cloudinary import CloudinaryImage
-def uploadImage(image):
+from cloudinary.utils import cloudinary_url
+def uploadImage(image, id):
 
     # Set the asset's public ID and allow overwriting the asset with new versions
-    cloudinary.uploader.upload(
-        "https://cloudinary-devs.github.io/cld-docs-assets/assets/images/butterfly.jpeg", 
-        public_id="quickstart_butterfly", 
-        unique_filename = False, 
-        overwrite=True)
+    cloudinary.uploader.upload( image, 
+                               public_id=id, 
+                               folder='drivers' )
+    print(image)
 
     # Build the URL for the image and save it in the variable 'srcURL'
-    srcURL = CloudinaryImage("quickstart_butterfly").build_url()
+    srcURL = cloudinary_url(f'drivers/{id}', type='upload', secure=True )
 
     print("****2. Upload an image****\nDelivery URL: ", srcURL, "\n")    
 
-    return srcURL
+    return srcURL[0]
 
-def uploadDocument(document):
+def uploadDocument(document, id):
 
     # Set the asset's public ID and allow overwriting the asset with new versions
-    cloudinary.uploader.upload(
-        "https://cloudinary-devs.github.io/cld-docs-assets/assets/images/butterfly.jpeg", 
-        public_id="quickstart_butterfly", 
-        unique_filename = False, 
-        overwrite=True)
-
+    result = cloudinary.uploader.upload( document, 
+                               resource_type='raw', 
+                               public_id=id, 
+                               folder='drivers/license' )
     # Build the URL for the image and save it in the variable 'srcURL'
-    srcURL = CloudinaryImage("quickstart_butterfly").build_url()
+    srcURL = cloudinary_url( f'drivers/license/{id}', 
+                              resource_type='raw', 
+                              type='upload', 
+                              secure=True )
 
     print("****2. Upload an image****\nDelivery URL: ", srcURL, "\n")    
 
-    return srcURL
+    return srcURL[0]

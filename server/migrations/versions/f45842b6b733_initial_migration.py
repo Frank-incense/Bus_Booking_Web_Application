@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: 2e47705cb6d3
+Revision ID: f45842b6b733
 Revises: 
-Create Date: 2025-07-23 08:34:32.137793
+Create Date: 2025-07-23 22:53:35.756672
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2e47705cb6d3'
+revision = 'f45842b6b733'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -50,14 +50,14 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.Column('email', sa.String(), nullable=False),
+    sa.Column('email', sa.String(), nullable=True),
     sa.Column('phone', sa.String(), nullable=True),
-    sa.Column('_password_hash', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=True),
     sa.Column('image_url', sa.String(), nullable=True),
     sa.Column('license', sa.String(), nullable=True),
     sa.Column('is_approved', sa.Boolean(), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
-    sa.Column('role', sa.Enum('Admin', 'Driver', name='user_roles'), nullable=False),
+    sa.Column('role', sa.Enum('Admin', 'Driver', name='user_roles'), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),

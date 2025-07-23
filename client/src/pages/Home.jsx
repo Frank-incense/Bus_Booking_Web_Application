@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Home.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import BusBooking from '../components/BusBooking';
 
 // Placeholder for an icon component if you have one
 const Icon = ({ name }) => <i className={`fa fa-${name}`}></i>;
@@ -10,6 +11,7 @@ const Home = () => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   const popularRoutes = [
     { id: 1, from: 'Nairobi', to: 'Kisumu', time: '6h 21min', price: 'Kes 1,500' },
@@ -90,6 +92,9 @@ const Home = () => {
           <button className="search-button" onClick={handleSearch}>
             SEARCH
           </button>
+          <button className="open-booking-button" onClick={() => setShowBookingModal(true)}>
+            Book a Bus
+          </button>
         </div>
       </section>
 
@@ -121,6 +126,9 @@ const Home = () => {
         </div>
         <button className="view-all-routes-button">View all routes</button>
       </section>
+
+      {/* Booking Modal */}
+      {showBookingModal && <BusBooking onClose={() => setShowBookingModal(false)} />}
 
       {/* Footer Section */}
       <footer className="footer-section">

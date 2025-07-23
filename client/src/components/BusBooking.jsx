@@ -11,7 +11,7 @@ const BusBooking = ({ operator = 'Easy Coach', departure = '07:00 Nairobi', arri
   const [selectedSeats, setSelectedSeats] = useState(new Set());
 
   const toggleSeat = (seat) => {
-    if (initialBookedSeats.has(seat)) return; // booked seat, no toggle
+    if (initialBookedSeats.has(seat)) return;
     const newSelectedSeats = new Set(selectedSeats);
     if (newSelectedSeats.has(seat)) {
       newSelectedSeats.delete(seat);

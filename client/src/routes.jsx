@@ -43,12 +43,13 @@ const router = createBrowserRouter([
         path: "service2",
         element: <Parcel />,
       },
+      {
+        path: "/admin", 
+        element: <AdminDashboard />,
+      },
     ],
   },
-  {
-    path: "/admin", 
-    element: <AdminDashboard />,
-  },
+  
 ]);
 
 export default router;

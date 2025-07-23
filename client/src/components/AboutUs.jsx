@@ -4,44 +4,29 @@ import './AboutUs.css';
 const AboutUs = () => {
   const team = [
     {
-      name: 'Alice Johnson',
-      role: 'Project Manager',
-      description: 'Alice leads projects & ensures timely execution, driving the team with expertise.',
+      name: 'Frankincense Okwemba',
+      role: 'Technical Lead',
+      description: 'Frankincense oversees system architecture and ensures the reliability and performance of our platform.',
     },
     {
-      name: 'Bob Smith',
-      role: 'Lead Developer',
-      description: 'Bob leads innovative architecture, driving development forward with precision and speed.',
+      name: 'Jeff Wafula',
+      role: 'Operations Manager',
+      description: 'Jeff streamlines operations, making sure services run smoothly and efficiently.',
     },
     {
-      name: 'Cathy Lee',
-      role: 'UI Designer',
-      description: 'Cathy designs user-friendly, beautiful interfaces, ensuring great user experience.',
+      name: 'Margaret Wanjiku',
+      role: 'UX/UI Designer',
+      description: 'Margaret crafts clean and intuitive designs for a seamless user experience.',
     },
     {
-      name: 'David Brown',
-      role: 'Marketing Specialist',
-      description: 'David focuses on marketing strategies, enhancing outreach and user adoption.',
+      name: 'Ibrahim Abdullahi',
+      role: 'Customer Relations',
+      description: 'Ibrahim builds relationships with customers and ensures satisfaction across all services.',
     },
     {
-      name: 'Emma Wilson',
-      role: 'Data Analyst',
-      description: 'Emma analyzes data insights, helping to refine and innovate for growth opportunities.',
-    },
-    {
-      name: 'Frank Harris',
-      role: 'Customer Support',
-      description: 'Frank provides exceptional support, ensuring user satisfaction and smooth experiences.',
-    },
-    {
-      name: 'Grace Lee',
-      role: 'Content Writer',
-      description: 'Grace creates engaging content that drives our brand mission forward with clarity.',
-    },
-    {
-      name: 'Wei-Yu Neing',
-      role: 'AI Lead',
-      description: 'Wei-Yu explores cutting-edge opportunities and leads our AI innovation efforts.',
+      name: 'Alex Dunstan',
+      role: 'Software Developer',
+      description: 'Alex writes scalable code and brings technical solutions to life across the platform.',
     },
   ];
 

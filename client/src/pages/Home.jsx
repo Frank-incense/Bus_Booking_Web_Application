@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-import React from 'react'
-
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
-
-export default Home
-=======
 import React, { useState } from 'react';
-import './Home.css'; // Assuming you'll have a Home.css for styling
+import './Home.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // Placeholder for an icon component if you have one
 const Icon = ({ name }) => <i className={`fa fa-${name}`}></i>;
@@ -18,33 +9,39 @@ const Icon = ({ name }) => <i className={`fa fa-${name}`}></i>;
 const Home = () => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
 
-  // Dummy data for popular routes
   const popularRoutes = [
     { id: 1, from: 'Nairobi', to: 'Kisumu', time: '6h 21min', price: 'Kes 1,500' },
     { id: 2, from: 'Nairobi', to: 'Mombasa', time: '8h', price: 'Kes 2,000' },
     { id: 3, from: 'Nairobi', to: 'Mandera', time: '18h 27min', price: 'Kes 3,500' },
     { id: 4, from: 'Nakuru', to: 'Siaya', time: '4h 59min', price: 'Kes 1,200' },
-    { id: 5, 'from': 'Nakuru', to: 'Kitale', time: '4h 26min', price: 'Kes 1,000' },
+    { id: 5, from: 'Nakuru', to: 'Kitale', time: '4h 26min', price: 'Kes 1,000' },
     { id: 6, from: 'Nairobi', to: 'Eldoret', time: '5h', price: 'Kes 900' },
   ];
 
   const handleSearch = () => {
-    console.log('Searching for:', { fromDate, toDate, selectedDate });
-    // Implement your search logic here
+    console.log('Searching for:', {
+      fromDate,
+      toDate,
+      selectedDate: selectedDate?.toLocaleDateString(),
+    });
   };
 
   return (
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero-section">
-        <img src="https://via.placeholder.com/1500x500/ADD8E6/FFFFFF?text=Bus+on+Road" alt="Bus on a road" className="hero-image" />
+        <img
+          src="https://via.placeholder.com/1500x500/ADD8E6/FFFFFF?text=Bus+on+Road"
+          alt="Bus on a road"
+          className="hero-image"
+        />
       </section>
 
       {/* Journey Hub Logo & Tagline */}
       <section className="journey-hub-intro">
-        <div className="star-rating">⭐⭐⭐⭐</div> {/* Replace with actual star component/icons */}
+        <div className="star-rating">⭐⭐⭐⭐</div>
         <h1>JOURNEY HUB</h1>
         <p>KENYA'S NUMBER ONE TRUSTED TRAVEL PARTNER</p>
       </section>
@@ -61,8 +58,9 @@ const Home = () => {
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
             />
-            <span className="clear-input">X</span> {/* Placeholder for clear button */}
+            <span className="clear-input">X</span>
           </div>
+
           <div className="input-group">
             <label htmlFor="to">To</label>
             <input
@@ -72,27 +70,26 @@ const Home = () => {
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
             />
-            <span className="clear-input">X</span> {/* Placeholder for clear button */}
+            <span className="clear-input">X</span>
           </div>
+
           <div className="input-group date-input-group">
             <label htmlFor="date">Select date</label>
-            <input
-              type="date" // Use type="date" for native date picker
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              placeholderText="Choose a date"
+              dateFormat="yyyy-MM-dd"
+              minDate={new Date()}
               id="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
+              className="date-picker-input"
+              required
             />
-            {/* If using a custom date picker, this is where it would be */}
-            {/* <div className="date-picker-placeholder">
-              <span>{selectedDate || 'DD/MM/YYYY'}</span>
-              <Icon name="calendar" />
-              <div className="calendar-popup">
-                <button>Cancel</button>
-                <button>OK</button>
-              </div>
-            </div> */}
           </div>
-          <button className="search-button" onClick={handleSearch}>SEARCH</button>
+
+          <button className="search-button" onClick={handleSearch}>
+            SEARCH
+          </button>
         </div>
       </section>
 
@@ -104,11 +101,17 @@ const Home = () => {
           {popularRoutes.map((route) => (
             <div key={route.id} className="route-card">
               <div className="route-header">
-                <h3>{route.from} - {route.to}</h3>
+                <h3>
+                  {route.from} - {route.to}
+                </h3>
               </div>
               <div className="route-details">
                 <div className="profile-pic-container">
-                    <img src="https://via.placeholder.com/30" alt="Profile" className="profile-pic" />
+                  <img
+                    src="https://via.placeholder.com/30"
+                    alt="Profile"
+                    className="profile-pic"
+                  />
                 </div>
                 <span>{route.time}</span>
                 <span>{route.price}</span>
@@ -123,7 +126,6 @@ const Home = () => {
       <footer className="footer-section">
         <div className="footer-columns">
           <div className="footer-column social-icons">
-            {/* Placeholder for social media icons */}
             <Icon name="facebook" />
             <Icon name="twitter" />
             <Icon name="instagram" />
@@ -172,4 +174,3 @@ const Home = () => {
 };
 
 export default Home;
->>>>>>> origin/develop

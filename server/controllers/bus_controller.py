@@ -23,3 +23,29 @@ class AddBus(Resource):
         db.session.commit()
 
         return make_response(bus.to_dict(), 201)
+    
+    def patch(self):
+        data = request.form
+
+        bus = Bus.query.filter_by(registration=data.get('registration')).first()
+
+        if bus:
+            for attr in data:
+                setattr(bus, attr, data[attr])
+
+            db.session.add(bus)
+            db.session.commit()
+
+            return make_response(bus.to_dict(), 201)
+        
+        return make_response({'Error': 'Bus not found.'}, 404)
+    
+    def delete(self, id):
+        bus = Bus.query.filter_by(id=id).first()
+        bus.status = 'Inactive'
+
+        db.session.add(bus)
+        db.session.commit()
+
+        return make_response({}, 204)
+    

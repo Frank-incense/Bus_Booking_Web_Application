@@ -70,12 +70,9 @@ const BusBooking = ({
     for (let row = 1; row <= seatRows; row++) {
       const seatsLeft = [];
       const seatsRight = [];
-      // Left side seats: columns 0 and 1 (A and B)
       seatsLeft.push(renderSeat(row, 0));
       seatsLeft.push(renderSeat(row, 1));
-      // Right side seats: columns 2 and 3 (C and D)
       if (row === 1) {
-        // For first row, only render 1 seat on right side (1C), leave space for driver seat
         seatsRight.push(renderSeat(row, 2));
       } else {
         seatsRight.push(renderSeat(row, 2));

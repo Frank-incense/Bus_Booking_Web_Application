@@ -63,7 +63,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <Sidebar /> 
       <main className="main-content">
 
         <section className="stats-section">

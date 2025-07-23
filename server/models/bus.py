@@ -14,7 +14,7 @@ class Bus(db.Model, SerializerMixin):
     id = Column(Integer(), primary_key=True)
     registration = Column(String(), nullable=False)
     user_id = Column(Integer(), ForeignKey('users.id'))
-    operator_id = Column(Integer(), ForeignKey())
+    operator_id = Column(Integer(), ForeignKey('operators.id'))
     no_of_seats = Column(Integer(), nullable=False)
     image_url = Column(String())
     status = Column(Enum(*STATUS, name='bus_status'), nullable=False)

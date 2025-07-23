@@ -17,8 +17,9 @@ class Operator(db.Model, SerializerMixin):
     updated_at = Column(DateTime(), onupdate=func.now())
 
     comments = relationship('Comment', back_populates='operator')
+    buses = relationship('Bus', back_populates='operator')
 
-    serialize_rules = ('-comments.operator',)
+    serialize_rules = ('-comments.operator','-buses.operator',)
     
     def __repr__(self):
         return f"Operator, {self.id} {self.operator}"

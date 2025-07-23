@@ -14,23 +14,27 @@ class User(db.Model, SerializerMixin):
     id = Column(Integer(), primary_key=True)
     name = Column(String(), nullable=False)
     email = Column(String(), unique=True, nullable=False)
-    _password_hash = Column(String(), nullable=False) 
+    phone = Column(String(), unique=True)
+    _password_hash = Column(String() ) 
     image_url = Column(String())
     license = Column(String())
     is_approved = Column(Boolean(), default=False)
+    is_active = Column(Boolean(), default=False)
     role = Column(Enum(*ROLES, name='user_roles'), nullable=False)
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 
-    buses = relationship('Bus', back_populates='users')
+    buses = relationship('Bus', back_populates='user')
     
-    serialize_rules = ('-buses.users',)
+    serialize_rules = ('-buses.user',)
     serialize_only = (
         'id', 
         'name', 
-        'email', 
+        'email',
+        'phone',
         'image_url', 
         'is_approved',
+        'is_active',
         'role',
         'created_at',
         'updated_at',)

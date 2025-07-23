@@ -12,6 +12,7 @@ const Home = () => {
   const [toDate, setToDate] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   const popularRoutes = [
     { id: 1, from: 'Nairobi', to: 'Kisumu', time: '6h 21min', price: 'Kes 1,500' },
@@ -92,9 +93,6 @@ const Home = () => {
           <button className="search-button" onClick={handleSearch}>
             SEARCH
           </button>
-          <button className="open-booking-button" onClick={() => setShowBookingModal(true)}>
-            Book a Bus
-          </button>
         </div>
       </section>
 
@@ -104,7 +102,15 @@ const Home = () => {
         <p>Discover the most traveled routes across the country</p>
         <div className="routes-grid">
           {popularRoutes.map((route) => (
-            <div key={route.id} className="route-card">
+            <div
+              key={route.id}
+              className="route-card"
+              onClick={() => {
+                setShowBookingModal(true);
+                setSelectedRoute(route);
+              }}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="route-header">
                 <h3>
                   {route.from} - {route.to}
@@ -128,7 +134,14 @@ const Home = () => {
       </section>
 
       {/* Booking Modal */}
-      {showBookingModal && <BusBooking onClose={() => setShowBookingModal(false)} />}
+      {showBookingModal && (
+        <BusBooking
+          operator="Easy Coach"
+          departure={`07:00 ${selectedRoute?.from || ''}`}
+          arrival={`04:00 ${selectedRoute?.to || ''}`}
+          onClose={() => setShowBookingModal(false)}
+        />
+      )}
 
       {/* Footer Section */}
       <footer className="footer-section">

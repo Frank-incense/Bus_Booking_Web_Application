@@ -1,23 +1,44 @@
 from server.config import db
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy import Column, Integer, String, DateTime, func
-from sqlalchemy.orm import validates
+from sqlalchemy import Column, Integer, String, DateTime, func, Boolean
+from sqlalchemy.orm import relationship, validates
+
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import Enum
+
+ROLES = ('Admin', 'Driver')
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=True)
-    email = Column(String, unique=True, nullable=False)
-    _password_hash = Column("password_hash", String, nullable=False)
-    image = Column(String, nullable=True)
-    role = Column(String, nullable=False, default="Driver")
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
+    id = Column(Integer(), primary_key=True)
+    name = Column(String(), nullable=False)
+    email = Column(String(), unique=True, nullable=False)
+    phone = Column(String(), unique=True)
+    _password_hash = Column(String() ) 
+    image_url = Column(String())
+    license = Column(String())
+    is_approved = Column(Boolean(), default=False)
+    is_active = Column(Boolean(), default=False)
+    role = Column(Enum(*ROLES, name='user_roles'), nullable=False)
+    created_at = Column(DateTime(), server_default=func.now())
+    updated_at = Column(DateTime(), onupdate=func.now())
 
-    serialize_rules = ('-password_hash',)
-
+    buses = relationship('Bus', back_populates='user')
+    
+    serialize_rules = ('-buses.user',)
+    serialize_only = (
+        'id', 
+        'name', 
+        'email',
+        'phone',
+        'image_url', 
+        'is_approved',
+        'is_active',
+        'role',
+        'created_at',
+        'updated_at',)
+    
     def __repr__(self):
         return f"<User {self.id}: {self.name}>"
 

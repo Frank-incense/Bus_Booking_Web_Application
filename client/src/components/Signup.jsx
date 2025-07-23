@@ -7,7 +7,7 @@ function Signup() {
     email: '',
     password: '',
     confirmPassword: '',
-    profilePic: null,
+    image_url: null,
     license: null,
     rememberMe: false
   });
@@ -70,12 +70,12 @@ function Signup() {
           <div className="upload-group">
             <label className="upload-label">Profile Picture</label>
             <label className="upload-box">
-              {preview.profilePic ? (
-                <img src={preview.profilePic} alt="Profile Preview" className="preview-image" />
+              {preview.image_url ? (
+                <img src={preview.image_url} alt="Profile Preview" className="preview-image" />
               ) : (
                 <div className="upload-icon" />
               )}
-              <input type="file" name="profilePic" accept="image/*" onChange={handleChange} />
+              <input type="file" name="image_url" accept="image/*" onChange={handleChange} />
             </label>
           </div>
 

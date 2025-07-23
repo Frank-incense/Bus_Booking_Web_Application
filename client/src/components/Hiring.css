@@ -1,0 +1,45 @@
+.hiring-container {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.hiring-hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f2f2f2;
+}
+
+.hiring-details {
+  margin-top: 40px;
+}
+
+.hiring-details ul {
+  list-style: none;
+  padding-left: 0;
+  line-height: 2;
+}
+
+.hiring-form-section {
+  margin-top: 60px;
+}
+
+.hiring-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.hiring-form input,
+.hiring-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.hiring-form button {
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+}

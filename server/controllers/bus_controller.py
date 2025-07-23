@@ -1,7 +1,6 @@
 from flask_jwt_extended import get_jwt_identity, create_access_token, jwt_required, set_access_cookies, unset_jwt_cookies
 from flask import request, make_response, jsonify
-from server.models import (User, Operator, Booking, Trip, 
-                           Route, Bus, Booking, Comment)
+from server.models import ( Bus )
 from sqlalchemy import func
 from server.config import db
 from flask_restful import Resource

@@ -1,4 +1,3 @@
-import React from 'react'
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
@@ -25,6 +24,7 @@ const Navbar = () => {
       <div className="navbar-right">
         <Link to="/signup" className="btn join">Join</Link>
         <Link to="/login" className="btn login">Login</Link>
+        <Link to="/admin" className="btn admin">Admin</Link>
       </div>
     </header>
   );

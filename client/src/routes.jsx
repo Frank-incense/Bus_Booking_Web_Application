@@ -5,7 +5,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-
+import Signup from "./components/Signup";
+import AdminDashboard from "./pages/AdminDashboard"; 
 
 const router = createBrowserRouter([
   {
@@ -24,9 +25,16 @@ const router = createBrowserRouter([
         path: "register",
         element: <RegisterForm />,
       },
+      {
+        path: "signup",
+        element: <Signup />,
+      },
     ],
+  },
+  {
+    path: "/admin", 
+    element: <AdminDashboard />,
   },
 ]);
 
 export default router;
-  

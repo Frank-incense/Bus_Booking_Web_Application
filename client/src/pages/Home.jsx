@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-import React from 'react'
-
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
-
-export default Home
-=======
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import './Home.css'; // Assuming you'll have a Home.css for styling
 
 // Placeholder for an icon component if you have one
@@ -172,4 +161,3 @@ const Home = () => {
 };
 
 export default Home;
->>>>>>> origin/develop

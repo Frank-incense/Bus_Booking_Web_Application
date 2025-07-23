@@ -8,15 +8,16 @@ from server.config import db
 
 class Register(Resource):
     def post(self):
+        data = request.form
+        print(data)
         if User.query.filter_by(email=data.get('email')).first():
             return jsonify({'error': 'Email already registered.'}), 409
 
-        data = request.form
         user = User(
-            name = data.get('name'),
-            email= data.get('email'),
-            password_hash = data.get('password'),
-            role = 'Driver'
+            name=data.get('name'),
+            email=data.get('email'),
+            password_hash=data.get('password'),
+            role='Driver'
         )
         if 'image' in request.files:
             user.image_url = uploadImage(request.files['image_url'])
@@ -28,7 +29,4 @@ class Register(Resource):
         db.session.add(user)
         db.session.commit()
 
-        return make_response({
-                'message': 'User registered successfully.',
-                'user': user.to_dict()
-            }, 201)
+        return make_response( user.to_dict(), 201)

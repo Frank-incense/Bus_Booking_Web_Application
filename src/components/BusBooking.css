@@ -1,0 +1,463 @@
+.bus-booking-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bus-booking-content {
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bus-booking-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.bus-booking-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.close-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.bus-booking-operator-time {
+  background: #f8fafc;
+  padding: 20px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #374151;
+}
+
+.operator-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.operator-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.route-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.route-arrow {
+  color: #667eea;
+  font-weight: bold;
+}
+
+.bus-booking-body {
+  padding: 32px;
+  display: flex;
+  gap: 32px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.seats-selection {
+  flex: 2;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-seat {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.seat {
+  width: 36px;
+  height: 36px;
+  margin: 4px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 36px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 11px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.seat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.seat:hover::before {
+  left: 100%;
+}
+
+.empty-seat {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  border: 2px solid #94a3b8;
+  color: #475569;
+}
+
+.empty-seat:hover {
+  background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(148, 163, 184, 0.3);
+}
+
+.booked-seat {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: 2px solid #b91c1c;
+  cursor: not-allowed;
+  color: white;
+  opacity: 0.7;
+}
+
+.selected-seat {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 2px solid #047857;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+}
+
+.driver-seat {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: 2px solid #b45309;
+  color: white;
+  cursor: default;
+}
+
+.seats-grid {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.seats-grid::before {
+  content: 'Front';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.seat-group-left,
+.seat-group-right {
+  display: flex;
+  gap: 4px;
+}
+
+.booking-details {
+  flex: 1;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 24px;
+  height: fit-content;
+  border: 1px solid #e2e8f0;
+}
+
+.booking-details h4 {
+  margin: 0 0 20px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #374151;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.booking-summary {
+  margin-bottom: 24px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.summary-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: #374151;
+}
+
+.total-fare {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.selected-seats-display {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.selected-seats-display h5 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.seat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.seat-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.book-seats-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.book-seats-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.book-seats-button:hover::before {
+  left: 100%;
+}
+
+.book-seats-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+.book-seats-button:disabled {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.book-seats-button:disabled::before {
+  display: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .bus-booking-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .bus-booking-body {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .bus-booking-operator-time {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .route-info {
+    justify-content: center;
+  }
+  
+  .legend {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .seat {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bus-booking-header {
+    padding: 16px 20px;
+  }
+  
+  .bus-booking-body {
+    padding: 16px;
+  }
+  
+  .seats-grid {
+    padding: 12px;
+  }
+  
+  .booking-details {
+    padding: 16px;
+  }
+}
+
+/* Custom Scrollbar for seats grid */
+.seats-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.seats-grid::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.seats-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 3px;
+}
+
+.seats-grid::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}

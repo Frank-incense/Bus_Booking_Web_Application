@@ -11,11 +11,13 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import UserDetailsModal from "../components/UserDetailsModal";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const AdminDashboard = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null); 
 
   const bookingData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
@@ -57,6 +59,8 @@ const AdminDashboard = () => {
     role: 'Driver',
     email: 'frankincense.okwemba@example.com',
     phone: '+254712345678',
+    profilePic: '/profile.png',  
+    license: '/license.png'
   };
 
   const users = [dummyUser, dummyUser, dummyUser];
@@ -96,7 +100,9 @@ const AdminDashboard = () => {
                     <div className="role">{user.role}</div>
                   </div>
                 </div>
-                <button className="add-btn">Add User</button>
+               <button className="add-btn" onClick={() => setSelectedUser(user)}>
+                  Add User
+                </button>
               </div>
             ))}
           </div>
@@ -134,6 +140,12 @@ const AdminDashboard = () => {
             </tbody>
           </table>
         </section>
+        {selectedUser && (
+          <UserDetailsModal
+            user={selectedUser}
+            onClose={() => setSelectedUser(null)}
+          />
+        )}
       </main>
     </div>
   );

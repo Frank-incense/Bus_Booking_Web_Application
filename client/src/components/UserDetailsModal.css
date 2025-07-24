@@ -1,0 +1,96 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: white;
+  width: 480px;
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.modal-top-section {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.modal-left {
+  flex: 0 0 100px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.modal-right {
+  flex: 1;
+}
+
+.license-section {
+  margin-top: 25px;
+}
+
+.license-section p {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.license-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-approve {
+  background-color: #1677ff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.modal-approve:hover {
+  background-color: #005ed9;
+}

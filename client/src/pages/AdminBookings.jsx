@@ -1,31 +1,31 @@
 import React from 'react';
-import './AdminBookings.css'; // Custom styles
+import './AdminBookings.css';
 
 const AdminBookings = () => {
   return (
-    <div className="container mt-5 admin-page">
+    <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Bookings</h2>
-        <button className="btn btn-outline-secondary">Add Booking</button>
+        <h2>Manage Bookings</h2>
+        <button className="btn btn-light">Add Booking</button>
       </div>
 
-      <div className="search-bar mb-3">
+      <div className="mb-3">
         <input
           type="text"
           className="form-control"
-          placeholder="Search Bookings"
+          placeholder="Search bookings"
         />
       </div>
 
-      <div className="d-flex gap-2 flex-wrap mb-4">
-        <button className="btn btn-light border">Route ▼</button>
-        <button className="btn btn-light border">Time ▼</button>
-        <button className="btn btn-light border">Customer ▼</button>
-        <button className="btn btn-light border">Bus ▼</button>
+      <div className="mb-4 d-flex gap-2">
+
+        <button className="btn btn-outline-secondary btn-sm">Date</button>
+        <button className="btn btn-outline-secondary btn-sm">Customer</button>
+        <button className="btn btn-outline-secondary btn-sm">Bus</button>
       </div>
 
       <div className="table-responsive">
-        <table className="table table-hover align-middle table-bookings">
+        <table className="table table-bordered align-middle">
           <thead className="table-light">
             <tr>
               <th>Customer</th>
@@ -34,7 +34,7 @@ const AdminBookings = () => {
               <th>Arrival</th>
               <th>Status</th>
               <th>Book Date</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -47,7 +47,9 @@ const AdminBookings = () => {
                 <td className="text-primary">Booked</td>
                 <td>11/07/2025 19:00</td>
                 <td>
-                  <a href="#" className="text-decoration-none">Edit</a>
+                  <a href="#" className="text-decoration-none text-primary fw-medium">
+                    Edit
+                  </a>
                 </td>
               </tr>
             ))}

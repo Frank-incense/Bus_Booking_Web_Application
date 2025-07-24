@@ -1,0 +1,29 @@
+.admin-page h2 {
+  font-weight: 700;
+}
+
+.search-bar input {
+  background-color: #e6f0ff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.table-bookings th,
+.table-bookings td {
+  vertical-align: middle;
+}
+
+.btn-light {
+  font-weight: 500;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.table-bookings a {
+  color: #0d6efd;
+}
+
+.table-bookings a:hover {
+  text-decoration: underline;
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './AdminDashboard.css';
 import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -62,30 +63,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <aside className="sidebar">
-        <img src="/logo.png" alt="Logo" className="sidebar-logo" />
-        <ul>
-          <li className="active"><i className="fas fa-tachometer-alt"></i><span>Dashboard</span></li>
-          <li><i className="fas fa-ticket-alt"></i><span>Bookings</span></li>
-          <li><i className="fas fa-map-marked-alt"></i><span>Routes</span></li>
-          <li><i className="fas fa-bus-alt"></i><span>Buses</span></li>
-          <li><i className="fas fa-users"></i><span>Users</span></li>
-          <li><i className="fas fa-file-alt"></i><span>Reports</span></li>
-        </ul>
-      </aside>
-
       <main className="main-content">
-        <header className="top-nav">
-          <nav>
-            <ul>
-              <li>Home</li>
-              <li>About Us</li>
-              <li>Contact Us</li>
-              <li>Services ▾</li>
-            </ul>
-          </nav>
-          <div className="avatar">👩🏽</div>
-        </header>
 
         <section className="stats-section">
           <div className="stat-card">

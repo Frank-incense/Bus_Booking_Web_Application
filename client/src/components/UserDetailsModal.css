@@ -2,95 +2,115 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .modal-container {
   background-color: white;
-  width: 480px;
-  padding: 20px;
+  padding: 32px;
+  width: 640px;
   border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   position: relative;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .modal-close {
   position: absolute;
-  top: 15px;
+  top: 16px;
   right: 20px;
-  font-size: 20px;
   background: none;
   border: none;
+  font-size: 24px;
   cursor: pointer;
 }
 
 .modal-title {
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #333;
 }
 
 .modal-top-section {
   display: flex;
-  gap: 20px;
-  align-items: center;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 36px;
 }
 
 .modal-left {
-  flex: 0 0 100px;
-}
-
-.profile-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 8px;
-  object-fit: cover;
-  border: 1px solid #ccc;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-right {
-  flex: 1;
+  flex: 2;
+}
+
+.profile-image,
+.license-image {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.modal-right p {
+  margin: 12px 0;
+  font-size: 17px;
+  color: #222;
+}
+
+.modal-right strong {
+  font-weight: 600;
+  margin-right: 5px;
 }
 
 .license-section {
-  margin-top: 25px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .license-section p {
+  font-weight: 700;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-size: 18px;
+  color: #333;
 }
 
-.license-image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
+
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 32px;
 }
 
 .modal-approve {
-  background-color: #1677ff;
+  padding: 12px 36px;
+  font-size: 17px;
+  background-color: #4285f4;
   color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s;
+  transition: background 0.2s ease-in-out;
 }
 
 .modal-approve:hover {
-  background-color: #005ed9;
+  background-color: #3367d6;
 }

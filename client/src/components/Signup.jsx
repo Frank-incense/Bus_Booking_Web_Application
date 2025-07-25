@@ -25,9 +25,10 @@ function Signup() {
     if (type === 'file') {
       const file = files[0];
       setFormData((prevData) => ({ ...prevData, [name]: file }));
+      const previewKey = name === 'image_url' ? 'profilePic' : name;
       setPreview((prev) => ({
         ...prev,
-        [name]: file ? URL.createObjectURL(file) : null
+        [previewKey]: file ? URL.createObjectURL(file) : null
       }));
     } else {
       setFormData((prevData) => ({
@@ -70,8 +71,8 @@ function Signup() {
           <div className="upload-group">
             <label className="upload-label">Profile Picture</label>
             <label className="upload-box">
-              {preview.image_url ? (
-                <img src={preview.image_url} alt="Profile Preview" className="preview-image" />
+              {preview.profilePic ? (
+                <img src={preview.profilePic} alt="Profile Preview" className="preview-image" />
               ) : (
                 <div className="upload-icon" />
               )}

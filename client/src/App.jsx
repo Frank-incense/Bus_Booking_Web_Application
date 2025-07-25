@@ -13,7 +13,6 @@ function App() {
   return (
     <div className="app-container">
       <Navbar />
-      {/* 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -22,7 +21,6 @@ function App() {
         <Route path="/service1" element={<Hiring />} />     
         <Route path="/service2" element={<Parcel />} /> 
       </Routes> 
-      */}
     </div>
   );
 }

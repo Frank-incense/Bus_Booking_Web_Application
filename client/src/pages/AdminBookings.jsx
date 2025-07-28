@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import './AdminBookings.css';
-import BookingDetailsModal from '../components/BookingDetailsModal';
-import CustomerDetailsModal from '../components/CustomerDetailsModal';
+import { useEffect, useState } from "react";
+import "./AdminBookings.css";
+import BookingDetailsModal from "../components/BookingDetailsModal";
+import CustomerDetailsModal from "../components/CustomerDetailsModal";
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -32,11 +32,17 @@ const AdminBookings = () => {
   const handleEditClick = (booking) => {
     setEditingBooking(booking);
     setIsModalOpen(true);
-  const [bookings, setBookings] = useState([]);
+  };
 
-  useEffect(()=>{
-    fetch('')
-  },[])
+  useEffect(() => {
+    // TODO: Replace with your API endpoint
+    fetch("")
+      .then((res) => res.json())
+      .then((data) => {
+        // setBookings(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const handleAddBooking = (newBooking) => {
     setBookings([...bookings, newBooking]);
@@ -51,11 +57,17 @@ const AdminBookings = () => {
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Manage Bookings</h2>
-        <button className="btn btn-light" onClick={handleAddClick}>Add Booking</button>
+        <button className="btn btn-light" onClick={handleAddClick}>
+          Add Booking
+        </button>
       </div>
 
       <div className="mb-3">
-        <input type="text" className="form-control" placeholder="Search bookings" />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search bookings"
+        />
       </div>
 
       <div className="mb-4 d-flex gap-2">
@@ -87,22 +99,36 @@ const AdminBookings = () => {
                 <td className="text-primary">Booked</td>
                 <td>11/07/2025 19:00</td>
                 <td>
-                  <span className="btn btn-sm btn-outline-primary disabled">Edit</span>
+                  <span className="btn btn-sm btn-outline-primary disabled">
+                    Edit
+                  </span>
                 </td>
               </tr>
             ))}
 
             {bookings.map((b, index) => (
               <tr key={`dynamic-${index}`}>
-                <td>{b.firstName} {b.secondName}</td>
+                <td>
+                  {b.firstName} {b.secondName}
+                </td>
                 <td>{b.tripId}</td>
-                <td>{b.time || 'N/A'}</td>
-                <td>{b.time || 'N/A'}</td>
+                <td>{b.time || "N/A"}</td>
+                <td>{b.time || "N/A"}</td>
                 <td className="text-primary">{b.status}</td>
                 <td>{b.bookDate}</td>
                 <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary" onClick={() => handleEditClick(b)}>Edit</button>
-                  <button className="btn btn-sm btn-outline-info" onClick={() => handleViewCustomer(b)}>View Details</button>
+                  <button
+                    className="btn btn-sm btn-outline-primary"
+                    onClick={() => handleEditClick(b)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-sm btn-outline-info"
+                    onClick={() => handleViewCustomer(b)}
+                  >
+                    View Details
+                  </button>
                 </td>
               </tr>
             ))}

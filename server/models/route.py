@@ -9,6 +9,7 @@ class Route(db.Model, SerializerMixin):
     __tablename__ = 'routes'
 
     id = Column(Integer(), primary_key=True)
+    name = Column(String(), nullable=False)
     origin = Column(String(), nullable=False)
     destination = Column(String(), nullable=False)
     distance = Column(Integer())

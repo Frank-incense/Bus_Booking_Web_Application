@@ -1,3 +1,4 @@
+from flask_restful import Resource
 import cloudinary.uploader
 from cloudinary.utils import cloudinary_url
 def uploadImage(image, id):
@@ -31,3 +32,8 @@ def uploadDocument(document, id):
     print("****2. Upload an image****\nDelivery URL: ", srcURL, "\n")    
 
     return srcURL[0]
+
+class Images(Resource):
+    def get(self):
+        images = cloudinary.Search().expression('folder:"static"').execute()
+        return images

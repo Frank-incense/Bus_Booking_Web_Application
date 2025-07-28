@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminDashboard.css';
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import UserDetailsModal from "../components/UserDetailsModal";
+
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -54,16 +55,50 @@ const AdminDashboard = () => {
     },
   };
 
-  const dummyUser = {
-    name: 'Frankincense Okwemba',
-    role: 'Driver',
-    email: 'frankincense.okwemba@example.com',
-    phone: '+254712345678',
-    profilePic: '/profile.png',  
-    license: '/license.png'
-  };
+  // const dummyUser = {
+  //   name: 'Frankincense Okwemba',
+  //   role: 'Driver',
+  //   email: 'frankincense.okwemba@example.com',
+  //   phone: '+254712345678',
+  //   profilePic: '/profile.png',  
+  //   license: '/license.png'
+  // };
+  const [users, setUsers] = useState([])
+  const [pending, setPending] = useState([])
+  const [summary, setSummary] = useState({})
 
-  const users = [dummyUser, dummyUser, dummyUser];
+  useEffect(()=>{
+    fetch('/api/drivers')
+    .then(r=>r.json())
+    .then(users=>setUsers(users))
+
+    fetch('/api/summary')
+    .then(r=>r.json())
+    .then(data=>setSummary(data))
+  
+    fetch('/api/pending?page=1&limit=4')
+    .then(r=>r.json())
+    .then(users=>setPending(users.data))
+
+  },[])
+  function handleApprove(user){
+    console.log(user)
+    fetch(`/api/approved/${user.id}`, {
+      method: 'PATCH',
+      headers:{
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({is_approved: true})
+    })
+    .then(r=>r.json())
+    .then(user=>{
+      setPending(
+      pending.filter(u=>u.id !== user.id)
+    )
+      setSelectedUser(null)
+  })
+  }
+  
 
   return (
     <div className="admin-dashboard">
@@ -73,25 +108,29 @@ const AdminDashboard = () => {
           <div className="stat-card">
             <i className="fas fa-bus-alt"></i>
             <span>Total Drivers</span>
+            <span>{summary.drivers}</span>
           </div>
           <div className="stat-card">
             <i className="fas fa-users"></i>
             <span>Total Users</span>
+            <span>{summary.users}</span>
           </div>
           <div className="stat-card">
             <i className="fas fa-ticket-alt"></i>
             <span>Total Bookings</span>
+            <span>{summary.bookings}</span>
           </div>
           <div className="stat-card">
             <i className="fas fa-map-marked-alt"></i>
             <span>Total Routes</span>
+            {summary.routes}
           </div>
         </section>
 
         <section className="dashboard-body">
           <div className="pending">
             <h3>Pending Applications</h3>
-            {users.map((user, i) => (
+            {pending.map((user, i) => (
               <div className="pending-item" key={i}>
                 <div className="user-info">
                   <div className="avatar-icon">👥</div>
@@ -142,6 +181,7 @@ const AdminDashboard = () => {
         </section>
         {selectedUser && (
           <UserDetailsModal
+            handleApprove={handleApprove}
             user={selectedUser}
             onClose={() => setSelectedUser(null)}
           />

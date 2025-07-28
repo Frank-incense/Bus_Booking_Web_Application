@@ -15,7 +15,7 @@ class Booking(db.Model, SerializerMixin):
     trip_id = Column(Integer(), ForeignKey('trips.id'), nullable=False)
     customer_id = Column(Integer(), ForeignKey('customers.id'), nullable=False)
     seat = Column(Integer(), nullable=False)
-    status = Column(Enum(*STATUS, name='booking_status'), default='Cancelled')
+    status = Column(Enum(*STATUS, name='booking_status'), default='Booked')
     created_at = Column(DateTime(), server_default=func.now())
     updated_at = Column(DateTime(), onupdate=func.now())
 

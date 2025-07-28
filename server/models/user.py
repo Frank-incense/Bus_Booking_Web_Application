@@ -33,6 +33,7 @@ class User(db.Model, SerializerMixin):
         'email',
         'phone',
         'image_url', 
+        'license',
         'is_approved',
         'is_active',
         'role',

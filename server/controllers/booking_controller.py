@@ -46,3 +46,41 @@ class Bookings(Resource):
         }
 
         return make_response(booking_data, 201)
+
+    def put(self):
+        data = request.get_json()
+        booking_id = data.get('id')
+        if not booking_id:
+            return make_response(jsonify({'error': 'Booking ID is required'}), 400)
+
+        booking = Booking.query.get(booking_id)
+        if not booking:
+            return make_response(jsonify({'error': 'Booking not found'}), 404)
+
+        customer = booking.customer
+        if not customer:
+            return make_response(jsonify({'error': 'Customer not found for booking'}), 404)
+
+        # Update customer details
+        customer.first_name = data.get('firstName', customer.first_name)
+        customer.second_name = data.get('secondName', customer.second_name)
+        customer.email = data.get('email', customer.email)
+        customer.phone = data.get('phone', customer.phone)
+        customer.identification = data.get('identification', customer.identification)
+        customer.nationality = data.get('nationality', customer.nationality)
+
+        # Update booking details
+        booking.trip_id = data.get('tripId', booking.trip_id)
+        booking.seat = data.get('seatNumber', booking.seat)
+
+        db.session.commit()
+
+        updated_booking_data = {
+            'id': booking.id,
+            'bus': booking.trip.bus_id,
+            'departure': booking.trip.departure,
+            'arrival': booking.trip.arrival,
+            'status': booking.status
+        }
+
+        return make_response(updated_booking_data, 200)

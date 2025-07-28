@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./AdminBookings.css";
 import BookingDetailsModal from "../components/BookingDetailsModal";
 import CustomerDetailsModal from "../components/CustomerDetailsModal";
+import { updateBooking } from "../api/bookings";
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -10,12 +11,17 @@ const AdminBookings = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-  const handleSaveBooking = (booking) => {
+  const handleSaveBooking = async (booking) => {
     if (editingBooking) {
-      const updatedList = bookings.map((b) =>
-        b.bookDate === editingBooking.bookDate ? booking : b
-      );
-      setBookings(updatedList);
+      try {
+        const updatedBooking = await updateBooking({ ...booking, id: editingBooking.id });
+        const updatedList = bookings.map((b) =>
+          b.id === updatedBooking.id ? { ...b, ...updatedBooking } : b
+        );
+        setBookings(updatedList);
+      } catch (error) {
+        console.error('Error updating booking:', error);
+      }
     } else {
       setBookings([...bookings, booking]);
     }

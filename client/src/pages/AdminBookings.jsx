@@ -4,13 +4,34 @@ import BookingDetailsModal from '../components/BookingDetailsModal';
 import CustomerDetailsModal from '../components/CustomerDetailsModal';
 
 const AdminBookings = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [bookings, setBookings] = useState([]);
+  const [editingBooking, setEditingBooking] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [bookings, setBookings] = useState([]);
 
-  const handleAddBooking = (newBooking) => {
-    setBookings([...bookings, newBooking]);
+  const handleSaveBooking = (booking) => {
+    if (editingBooking) {
+      const updatedList = bookings.map((b) =>
+        b.bookDate === editingBooking.bookDate ? booking : b
+      );
+      setBookings(updatedList);
+    } else {
+      setBookings([...bookings, booking]);
+    }
+
+    setIsModalOpen(false);
+    setEditingBooking(null);
+  };
+
+  const handleAddClick = () => {
+    setEditingBooking(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEditClick = (booking) => {
+    setEditingBooking(booking);
+    setIsModalOpen(true);
   };
 
   const handleViewCustomer = (customer) => {
@@ -22,7 +43,7 @@ const AdminBookings = () => {
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Manage Bookings</h2>
-        <button className="btn btn-light" onClick={() => setShowModal(true)}>Add Booking</button>
+        <button className="btn btn-light" onClick={handleAddClick}>Add Booking</button>
       </div>
 
       <div className="mb-3">
@@ -58,7 +79,7 @@ const AdminBookings = () => {
                 <td className="text-primary">Booked</td>
                 <td>11/07/2025 19:00</td>
                 <td>
-                  <a href="#" className="text-decoration-none text-primary fw-medium">Edit</a>
+                  <span className="btn btn-sm btn-outline-primary disabled">Edit</span>
                 </td>
               </tr>
             ))}
@@ -72,13 +93,8 @@ const AdminBookings = () => {
                 <td className="text-primary">{b.status}</td>
                 <td>{b.bookDate}</td>
                 <td className="d-flex gap-2">
-                  <a href="#" className="btn btn-sm btn-outline-primary">Edit</a>
-                  <button
-                    className="btn btn-sm btn-outline-info"
-                    onClick={() => handleViewCustomer(b)}
-                  >
-                    View Details
-                  </button>
+                  <button className="btn btn-sm btn-outline-primary" onClick={() => handleEditClick(b)}>Edit</button>
+                  <button className="btn btn-sm btn-outline-info" onClick={() => handleViewCustomer(b)}>View Details</button>
                 </td>
               </tr>
             ))}
@@ -86,10 +102,14 @@ const AdminBookings = () => {
         </table>
       </div>
 
-      {showModal && (
+      {isModalOpen && (
         <BookingDetailsModal
-          onSave={handleAddBooking}
-          onClose={() => setShowModal(false)}
+          onSave={handleSaveBooking}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingBooking(null);
+          }}
+          initialData={editingBooking}
         />
       )}
 

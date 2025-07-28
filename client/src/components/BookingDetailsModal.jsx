@@ -20,7 +20,7 @@ const BookingDetailsModal = ({ onSave, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     const newBooking = {
       ...formData,
       status: 'Booked',

@@ -1,6 +1,6 @@
 from flask_jwt_extended import get_jwt_identity, create_access_token, jwt_required, set_access_cookies, unset_jwt_cookies
 from flask import request, make_response, jsonify
-from server.models import ( Bus )
+from server.models import ( Bus, Route )
 from sqlalchemy import func
 from server.config import db
 from flask_restful import Resource
@@ -47,4 +47,27 @@ class AddBus(Resource):
         db.session.commit()
 
         return make_response({}, 204)
-    
+
+class Routes(Resource):
+    def get(self):
+        routes = Route.query.all()
+
+        if routes:
+            return make_response([route.to_dict() for route in routes], 200) 
+
+        return make_response({'error': 'No routes found'}, 404)
+
+    def post(self):
+        data = request.get_json()
+
+        route = Route(
+            name = data.get('name'),
+            origin = data.get('origin'),
+            destination = data.get('destination'),
+            distance = data.get('distance')
+        )
+
+        db.session.add(route)
+        db.session.commit()
+
+        return make_response(route.to_dict(), 201)

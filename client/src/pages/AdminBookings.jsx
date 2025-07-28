@@ -32,15 +32,16 @@ const AdminBookings = () => {
   const handleEditClick = (booking) => {
     setEditingBooking(booking);
     setIsModalOpen(true);
-  const [bookings, setBookings] = useState([]);
+  }
+  
 
   useEffect(()=>{
     fetch('')
   },[])
 
-  const handleAddBooking = (newBooking) => {
-    setBookings([...bookings, newBooking]);
-  };
+  // const handleAddBooking = (newBooking) => {
+  //   setBookings([...bookings, newBooking]);
+  // };
 
   const handleViewCustomer = (customer) => {
     setSelectedCustomer(customer);

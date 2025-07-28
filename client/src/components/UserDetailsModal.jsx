@@ -1,8 +1,9 @@
 import React from 'react';
 import './UserDetailsModal.css';
 
-const UserDetailsModal = ({ user, onClose }) => {
+const UserDetailsModal = ({ handleApprove, user, onClose }) => {
   if (!user) return null;
+  
 
   return (
     <div className="modal-overlay">
@@ -13,7 +14,7 @@ const UserDetailsModal = ({ user, onClose }) => {
 
         <div className="modal-top-section">
           <div className="modal-left">
-            <img src={user.profilePic} alt="Profile" className="profile-image" />
+            <img src={user.image_url} alt="Profile" className="profile-image" />
           </div>
           <div className="modal-right">
             <p><strong>Name:</strong> {user.name}</p>
@@ -25,11 +26,19 @@ const UserDetailsModal = ({ user, onClose }) => {
 
         <div className="license-section">
           <p><strong>License</strong></p>
-          <img src={user.license} alt="License" className="license-image" />
+          {user.license ? 
+          <iframe
+            src={`https://docs.google.com/gview?url=${encodeURIComponent(user.license)}&embedded=true`}
+            width="100%"
+            height="400px"
+            title="License Preview"
+          />
+
+        :null}
         </div>
 
         <div className="modal-footer">
-          <button className="modal-approve">Approve</button>
+          <button className="modal-approve" onClick={() => handleApprove(user)}>Approve</button>
         </div>
       </div>
     </div>

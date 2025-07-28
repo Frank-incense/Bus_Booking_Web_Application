@@ -60,8 +60,8 @@ function Signup() {
       .then((res) => res.json())
       .then((user) => {
         console.log(user);
-        navigate('/login')
         setMessage("You’ve signed up! Check your email.");
+        navigate('/login')
       })
       .catch((err) => {
         console.error(err);

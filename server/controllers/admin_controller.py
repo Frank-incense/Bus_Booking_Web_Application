@@ -21,10 +21,12 @@ class AdminSummary(Resource):
             'routes': len(routes)
         }), 200)
     
+class Approve(Resource):
     def patch(self, id):
         data = request.get_json()
+        print(data)
         user = User.query.filter_by(id=id).first()
-
+        print(user)
         if user:
             for attr in data:
                 setattr(user, attr, data[attr])
@@ -36,14 +38,27 @@ class AdminSummary(Resource):
         
         return make_response({
             'Error': 'User does not exist.'
-        }, 400)
+        }, 404)
 
 class PendingApprovals(Resource):
     def get(self):
-        users = User.query.filter_by(is_approved=False, role='Driver').all()
-        
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', 4))
+
+        pagination = User.query.filter_by(is_approved=False)\
+            .order_by(User.created_at.desc())\
+            .paginate(page=page, per_page=per_page, error_out=False)
+            
+        users = pagination.items
+
         if users:
-            return make_response([user.to_dict() for user in users], 200)
+            return make_response({
+                'data': [user.to_dict() for user in users],
+                'total': pagination.total,
+                'pages': pagination.pages,
+                'current_page': pagination.page,
+                'per_page': pagination.per_page,
+            }, 200)
         return make_response({'Error': 'No users found'}, 400)
     
 class BookingStats(Resource):
@@ -72,6 +87,9 @@ class Driver(Resource):
         users = User.query.filter_by(role='Driver').all()
 
         if users:
+            for user in users:
+                if user.license:
+                    user.license = user.license.replace('/upload/', '/upload/fl_attachment:false/')
             return make_response([user.to_dict() for user in users], 200)
         return make_response({
             'Error': 'No drivers found.'

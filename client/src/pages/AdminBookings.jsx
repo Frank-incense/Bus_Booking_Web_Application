@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AdminBookings.css';
 import BookingDetailsModal from '../components/BookingDetailsModal';
 import CustomerDetailsModal from '../components/CustomerDetailsModal';
@@ -32,6 +32,14 @@ const AdminBookings = () => {
   const handleEditClick = (booking) => {
     setEditingBooking(booking);
     setIsModalOpen(true);
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(()=>{
+    fetch('')
+  },[])
+
+  const handleAddBooking = (newBooking) => {
+    setBookings([...bookings, newBooking]);
   };
 
   const handleViewCustomer = (customer) => {

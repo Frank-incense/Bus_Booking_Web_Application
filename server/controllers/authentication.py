@@ -21,7 +21,7 @@ class Register(Resource):
 
         user.password_hash = data.get('password')
         print(request.files)
-        if 'image' in request.files:
+        if request.files.get('image_url'):
             user.image_url = uploadImage(request.files['image_url'], user.name)
         if request.files.get('license'):
             user.license = uploadDocument(request.files['license'], user.name)

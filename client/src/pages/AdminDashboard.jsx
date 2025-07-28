@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import UserDetailsModal from "../components/UserDetailsModal";
 
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const AdminDashboard = () => {

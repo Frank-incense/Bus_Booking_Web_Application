@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 
 function Signup() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,7 +23,7 @@ function Signup() {
 
   const handleChange = (event) => {
     const { name, type, checked, files, value } = event.target;
-
+    
     if (type === 'file') {
       const file = files[0];
       setFormData((prevData) => ({ ...prevData, [name]: file }));
@@ -44,7 +46,27 @@ function Signup() {
       setMessage("Oops! Your passwords don't match. Try again.");
       return;
     }
-    console.log("Submitted:", formData);
+    const uploadData = new FormData();
+    uploadData.append('name', formData.name);
+    uploadData.append('email', formData.email);
+    uploadData.append('password', formData.password);
+    uploadData.append('image_url', formData.image_url);
+    uploadData.append('license', formData.license);
+    
+    fetch('/api/signup', {
+      method: 'POST',
+      body: uploadData,
+    })
+      .then((res) => res.json())
+      .then((user) => {
+        console.log(user);
+        navigate('/login')
+        setMessage("You’ve signed up! Check your email.");
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessage(err);
+      });
     setMessage("You’ve signed up! Check your email.");
   };
 
@@ -61,7 +83,7 @@ function Signup() {
 
       {message && <p className="form-message">{message}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
@@ -84,7 +106,11 @@ function Signup() {
             <label className="upload-label">Drivers license</label>
             <label className="upload-box">
               {preview.license ? (
-                <img src={preview.license} alt="License Preview" className="preview-image" />
+                 <iframe
+                    src={preview.license}
+                    width="100%"
+                    title="PDF Preview"
+                  ></iframe>
               ) : (
                 <div className="upload-icon" />
               )}

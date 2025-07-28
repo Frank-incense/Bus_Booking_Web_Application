@@ -9,7 +9,7 @@ from server.config import db
 class Register(Resource):
     def post(self):
         data = request.form
-        print(data)
+        print(data['name'])
         if User.query.filter_by(email=data.get('email')).first():
             return jsonify({'error': 'Email already registered.'}), 409
 
@@ -23,12 +23,12 @@ class Register(Resource):
         print(request.files)
         if 'image' in request.files:
             user.image_url = uploadImage(request.files['image_url'], user.name)
-        if 'document' in request.files:
-            user.license = uploadDocument(request.files['document'], user.name)
+        if request.files.get('license'):
+            user.license = uploadDocument(request.files['license'], user.name)
         else:
-            return jsonify({'error': 'Please upload your license.'}), 400
+            return make_response(jsonify({'error': 'Please upload your license.'}), 400)
         print(user.license)
         db.session.add(user)
         db.session.commit()
-
+        print(user.to_dict())
         return make_response( user.to_dict(), 201)

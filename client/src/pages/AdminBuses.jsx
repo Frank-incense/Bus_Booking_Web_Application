@@ -1,65 +1,73 @@
-import React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-const buses = [
-  {
-    driver: 'Frankincense Wesley',
-    bus: 1,
-    trip: 2,
-    arrival: '11/07/2025 19:00',
-    status: 'Active',
-    seats: 50,
-  },
-  {
-    driver: 'Frankincense Wesley',
-    bus: 1,
-    trip: 11,
-    arrival: '11/07/2025 19:00',
-    status: 'Inactive',
-    seats: 50,
-  },
-  {
-    driver: 'Frankincense Wesley',
-    bus: 1,
-    trip: 7,
-    arrival: '11/07/2025 19:00',
-    status: 'Active',
-    seats: 50,
-  },
-];
-
-const trips = [
-  {
-    route: 'Route A',
-    bus: 1,
-    departure: '11/07/2025 19:00',
-    arrival: '11/07/2025 19:00',
-    cost: '$25',
-  },
-  {
-    route: 'Route B',
-    bus: 1,
-    departure: '11/07/2025 19:00',
-    arrival: '11/07/2025 19:00',
-    cost: '$25',
-  },
-  {
-    route: 'Route C',
-    bus: 1,
-    departure: '11/07/2025 19:00',
-    arrival: '11/07/2025 19:00',
-    cost: '$25',
-  },
-];
+import BusModal from '../components/BusModal';
+import TripModal from '../components/TripModal';
+import { AuthContext } from '../context/AuthContext';
 
 const AdminBuses = () => {
+  const [buses, setBuses] = useState([])
+  const [trips, setTrips] = useState([])
+  const [showBusModal, setShowBusModal] = useState(false);
+  const [showTripModal, setShowTripModal] = useState(false);
+  const [currentBus, setCurrentBus] = useState(null);
+  const [currentTrip, setCurrentTrip] = useState(null);
+
+  const {user} = useContext(AuthContext)
+  console.log(user)
+  useEffect(()=>{
+    const busUrl = user?.role === 'admin' 
+        ? '/api/buses' 
+        : `/api/buses?driver_id=${user?.id}`;
+
+    const tripUrl = user?.role === 'admin' 
+      ? '/api/trips' 
+      : `/api/trips?driver_id=${user?.id}`;
+
+    fetch(busUrl)
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error(`Failed to fetch buses: ${r.status} ${r.statusText}`);
+        }
+        return r.json();
+      })
+      .then((buses) => {
+        setBuses(buses.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching buses:", error.message);
+        // Optionally show an error message to the user
+      });
+
+    fetch(tripUrl)
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error(`Failed to fetch trips: ${r.status} ${r.statusText}`);
+        }
+        return r.json();
+      })
+      .then((trips) => {
+        console.log(trips)
+        setTrips(trips);
+      })
+      .catch((error) => {
+        console.error("Error fetching trips:", error.message);
+        // Optionally show an error message to the user
+      });
+
+  },[])
+    console.log(buses)
   return (
     <div className="container py-4">
       {/* Buses Section */}
       <div>
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Buses</h2>
-          <button className="btn btn-primary">Add Bus</button>
+          <button className="btn btn-primary" onClick={() => {
+            setCurrentBus(null);
+            setShowBusModal(true);
+          }}>
+            Add Bus
+          </button>
         </div>
 
         <div className="mb-3">
@@ -83,8 +91,8 @@ const AdminBuses = () => {
               <tr>
                 <th>Driver</th>
                 <th>Bus</th>
-                <th>Trip</th>
-                <th>Arrival</th>
+                <th>Trip Count</th>
+                {/* <th>Arrival</th> */}
                 <th>Status</th>
                 <th>No. of Seats</th>
                 <th>Actions</th>
@@ -93,16 +101,24 @@ const AdminBuses = () => {
             <tbody>
               {buses.map((bus, index) => (
                 <tr key={index}>
-                  <td>{bus.driver}</td>
-                  <td>{bus.bus}</td>
-                  <td>{bus.trip}</td>
-                  <td>{bus.arrival}</td>
+                  <td>{bus.user.name}</td>
+                  <td>{bus.registration}</td>
+                  <td>{bus.trips.length}</td>
+                  {/* <td>{bus.arrival}</td> */}
                   <td className={bus.status === 'Active' ? 'text-success' : 'text-danger'}>
                     {bus.status}
                   </td>
-                  <td>{bus.seats}</td>
+                  <td>{bus.no_of_seats}</td>
                   <td>
-                    <a href="#" className="text-decoration-none text-primary fw-medium">
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentBus(bus);
+                        setShowBusModal(true);
+                      }}
+                      className="text-decoration-none text-primary fw-medium"
+                    >
                       Edit
                     </a>
                   </td>
@@ -112,12 +128,29 @@ const AdminBuses = () => {
           </table>
         </div>
       </div>
-
+      <BusModal
+        show={showBusModal}
+        onClose={() => setShowBusModal(false)}
+        onSave={(busData) => {
+          if (currentBus) {
+            setBuses(prev => prev.map(b => b === currentBus ? busData : b));
+          } else {
+            setBuses(prev => [...prev, busData]);
+          }
+        }}
+        bus={currentBus}
+        user={user}
+      />
       {/* Trips Section */}
       <div className="mt-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Trips</h2>
-          <button className="btn btn-secondary">Schedule Trip</button>
+          <button className="btn btn-secondary" onClick={() => {
+            setCurrentTrip(null);
+            setShowTripModal(true);
+          }}>
+            Schedule Trip
+          </button>
         </div>
 
         <div className="mb-3">
@@ -150,13 +183,21 @@ const AdminBuses = () => {
             <tbody>
               {trips.map((trip, index) => (
                 <tr key={index}>
-                  <td>{trip.route}</td>
-                  <td>{trip.bus}</td>
+                  <td>{trip.route.name}</td>
+                  <td>{trip.bus.registration}</td>
                   <td>{trip.departure}</td>
                   <td>{trip.arrival}</td>
                   <td>{trip.cost}</td>
                   <td>
-                    <a href="#" className="text-decoration-none text-primary fw-medium">
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentTrip(trip);
+                        setShowTripModal(true);
+                      }}
+                      className="text-decoration-none text-primary fw-medium"
+                    >
                       Edit
                     </a>
                   </td>
@@ -166,6 +207,18 @@ const AdminBuses = () => {
           </table>
         </div>
       </div>
+      <TripModal
+        show={showTripModal}
+        onClose={() => setShowTripModal(false)}
+        onSave={(tripData) => {
+          if (currentTrip) {
+            setTrips(prev => prev.map(t => t === currentTrip ? tripData : t));
+          } else {
+            setTrips(prev => [...prev, tripData]);
+          }
+        }}
+        trip={currentTrip}
+      />
     </div>
   );
 };

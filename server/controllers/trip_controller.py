@@ -18,8 +18,8 @@ class Trips(Resource):
         data = request.get_json()
 
         trip = Trip(
-            bus_id = Bus.query.filter_by(registration=data.get('registration')).first(),
-            route_id = data.get('id'),
+            bus_id = data.get('bus_id'),
+            route_id = data.get('route_id'),
             departure = data.get('departure'),
             arrival = data.get('arrival'),
             cost = data.get('cost') 
@@ -29,15 +29,15 @@ class Trips(Resource):
         db.session.commit()
 
         return make_response(trip.to_dict(), 201)
-    
+class TripById(Resource):
     def patch(self, id):
         data = request.get_json()
         trip = Trip.query.filter_by(id=id).first()
-
+        
         if trip:
             for attr in data:
                 setattr(trip, attr, data[attr])
-
+            
             db.session.add(trip)
             db.session.commit()
 

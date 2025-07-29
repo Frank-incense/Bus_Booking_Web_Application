@@ -10,6 +10,30 @@ const AdminBookings = () => {
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1); // Total pages from backend
+
+  const PER_PAGE = 10;
+
+  const fetchBookings = async (pageNum) => {
+    try {
+      const res = await fetch(`/api/bookings?page=${pageNum}&per_page=${PER_PAGE}`);
+      const data = await res.json();
+
+      if (res.ok) {
+        setBookings(data.data || []);
+        setPages(data.pages||1);
+        setPage(data.page||1);
+      }
+    } catch (err) {
+      console.error("Failed to fetch bookings:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookings(page);
+  }, [page]);
+
   const handleSaveBooking = (booking) => {
     if (editingBooking) {
       const updatedList = bookings.map((b) =>
@@ -19,7 +43,6 @@ const AdminBookings = () => {
     } else {
       setBookings([...bookings, booking]);
     }
-
     setIsModalOpen(false);
     setEditingBooking(null);
   };
@@ -34,23 +57,16 @@ const AdminBookings = () => {
     setIsModalOpen(true);
   };
 
-  useEffect(() => {
-    // TODO: Replace with your API endpoint
-    fetch("")
-      .then((res) => res.json())
-      .then((data) => {
-        // setBookings(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  const handleAddBooking = (newBooking) => {
-    setBookings([...bookings, newBooking]);
-  };
-
   const handleViewCustomer = (customer) => {
     setSelectedCustomer(customer);
     setShowCustomerModal(true);
+  };
+  console.log(page, pages)
+  const handlePageChange = (direction) => {
+    const newPage = direction === "prev" ? page - 1 : page + 1;
+    if (newPage >= 1 && newPage <= pages) {
+      setPage(newPage);
+    }
   };
 
   return (
@@ -70,12 +86,6 @@ const AdminBookings = () => {
         />
       </div>
 
-      <div className="mb-4 d-flex gap-2">
-        <button className="btn btn-outline-secondary btn-sm">Date</button>
-        <button className="btn btn-outline-secondary btn-sm">Customer</button>
-        <button className="btn btn-outline-secondary btn-sm">Bus</button>
-      </div>
-
       <div className="table-responsive">
         <table className="table table-bordered align-middle">
           <thead className="table-light">
@@ -90,30 +100,12 @@ const AdminBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <tr key={index}>
-                <td>Frankincense Wesley</td>
-                <td>1</td>
-                <td>11/07/2025 19:00</td>
-                <td>11/07/2025 19:00</td>
-                <td className="text-primary">Booked</td>
-                <td>11/07/2025 19:00</td>
-                <td>
-                  <span className="btn btn-sm btn-outline-primary disabled">
-                    Edit
-                  </span>
-                </td>
-              </tr>
-            ))}
-
             {bookings.map((b, index) => (
-              <tr key={`dynamic-${index}`}>
-                <td>
-                  {b.firstName} {b.secondName}
-                </td>
+              <tr key={`booking-${index}`}>
+                <td>{b.firstName} {b.secondName}</td>
                 <td>{b.tripId}</td>
-                <td>{b.time || "N/A"}</td>
-                <td>{b.time || "N/A"}</td>
+                <td>{b.departure || "N/A"}</td>
+                <td>{b.arrival || "N/A"}</td>
                 <td className="text-primary">{b.status}</td>
                 <td>{b.bookDate}</td>
                 <td className="d-flex gap-2">
@@ -134,6 +126,25 @@ const AdminBookings = () => {
             ))}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        <div className="d-flex justify-content-between align-items-center mt-3">
+          <button
+            className="btn btn-sm btn-secondary"
+            onClick={() => handlePageChange("prev")}
+            disabled={page <= 1}
+          >
+             Prev
+          </button>
+          <span>Page {page} of {pages}</span>
+          <button
+            className="btn btn-sm btn-secondary"
+            onClick={() => handlePageChange("next")}
+            disabled={page >= pages}
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       {isModalOpen && (

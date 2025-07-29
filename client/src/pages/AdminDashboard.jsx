@@ -88,7 +88,10 @@ const AdminDashboard = () => {
       headers:{
         'content-type': 'application/json'
       },
-      body: JSON.stringify({is_approved: true})
+      body: JSON.stringify({
+        is_approved: true,
+        is_active: true
+      })
     })
     .then(r=>r.json())
     .then(user=>{

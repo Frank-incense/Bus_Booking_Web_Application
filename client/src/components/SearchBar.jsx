@@ -112,7 +112,7 @@
 //   );
 // }
 import  { useState, useEffect } from 'react';
-import {getCounties} from 'kenya-locations'
+import { getCounties } from 'kenya-locations'
 
 const counties = getCounties();
 

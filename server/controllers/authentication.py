@@ -20,15 +20,16 @@ class Register(Resource):
         )
 
         user.password_hash = data.get('password')
-        print(request.files)
+        
         if request.files.get('image_url'):
-            user.image_url = uploadImage(request.files['image_url'], user.name)
+            user.image_url = uploadImage(request.files['image_url'], user.name, 'drivers')
+            
         if request.files.get('license'):
             user.license = uploadDocument(request.files['license'], user.name)
         else:
             return make_response(jsonify({'error': 'Please upload your license.'}), 400)
-        print(user.license)
+        
         db.session.add(user)
         db.session.commit()
-        print(user.to_dict())
+        
         return make_response( user.to_dict(), 201)

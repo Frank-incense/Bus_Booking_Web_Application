@@ -1,45 +1,51 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-const routes = [
-  {
-    name: 'Route A',
-    from: 'Nairobi',
-    to: 'Kisumu',
-    schedule: 'Mon-Fri: 8 AM, 12 PM, 5 PM',
-  },
-  {
-    name: 'Route B',
-    from: 'Mombasa',
-    to: 'Nakuru',
-    schedule: 'Daily: 7 AM, 10 AM, 2 PM, 6 PM',
-  },
-  {
-    name: 'Route C',
-    from: 'Eldoret',
-    to: 'Thika',
-    schedule: 'Mon-Sat: 9 AM, 1 PM, 6 PM',
-  },
-  {
-    name: 'Route D',
-    from: 'Kakamega',
-    to: 'Kericho',
-    schedule: 'Weekends: 10 AM, 3 PM, 7 PM',
-  },
-  {
-    name: 'Route E',
-    from: 'Naivasha',
-    to: 'Nyeri',
-    schedule: 'Mon-Fri: 6 AM, 2 PM, 10 PM',
-  },
-];
+import RouteModal from '../components/AddRouteModal';
+import { useEffect, useState } from 'react';
 
 const AdminRoutesManager = () => {
+  const [editRoute, setEditRoute] = useState(null);
+  const [routes, setRoutes] = useState([])
+
+  function handleEdit(route) {
+      setEditRoute(route);
+  }
+  
+  useEffect(()=>{
+    fetch('/api/routes')
+    .then(r=>r.json())
+    .then(routes=>{
+      setRoutes(routes)
+    })
+  },[])
+
+  function handleUpdate(updatedRoute) {
+      setRoutes(prev =>
+          prev.map(r => (r.id === updatedRoute.id ? updatedRoute : r))
+      );
+      setEditRoute(null);
+  }
+
+  function handleCancel(){
+      setEditRoute(null);
+  }
+
+  function handlePost(route){
+      setRoutes([
+          ...routes,
+          route
+      ])
+  }
+
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Manage Routes</h2>
-        <button className="btn btn-light">Add Route</button>
+        <button
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Add Route
+        </button>
       </div>
 
       <div className="mb-3">
@@ -71,20 +77,34 @@ const AdminRoutesManager = () => {
                 <td>{route.name}</td>
                 <td>
                   <span className="text-primary">
-                    {route.from} – {route.to}
+                    {route.origin} – {route.destination}
                   </span>
                 </td>
-                <td>{route.schedule}</td>
+                <td>{route.schedule || 'Not set'}</td>
                 <td>
-                  <a href="#" className="text-decoration-none text-primary fw-medium">
-                    Edit
-                  </a>
+                  <button 
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={() => handleEdit(route)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  >
+                     Edit
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Modal for Adding Route */}
+      <RouteModal
+        routeToEdit={editRoute}
+        onPost={handlePost}
+        onUpdate={handleUpdate}
+        handleCancel={handleCancel}
+      />
+
     </div>
   );
 };

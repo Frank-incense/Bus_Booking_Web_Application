@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './BookingDetailsModal.css';
+import { countries } from 'countries-list';
 
+const nationality = []
+console.log(countries)
+for (let country in countries){
+  nationality.push(countries[country].name)
+}
+console.log(nationality)
 const BookingDetailsModal = ({ onSave, onClose, initialData }) => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -29,12 +36,22 @@ const BookingDetailsModal = ({ onSave, onClose, initialData }) => {
 
     const updatedBooking = {
       ...formData,
-      status: 'Booked',
-      bookDate: formData.bookDate || new Date().toLocaleString(),
+      status: 'Booked'
+      // bookDate: formData.bookDate || new Date().toLocaleString(),
     };
 
-    onSave(updatedBooking);
-    onClose();
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(updatedBooking)
+    })
+    .then(r=>r.json())
+    .then(data=>{
+        onSave(data);
+        onClose();
+    })
   };
 
   return (
@@ -48,7 +65,21 @@ const BookingDetailsModal = ({ onSave, onClose, initialData }) => {
           <input name="email" placeholder="Email" type="email" value={formData.email} onChange={handleChange} required />
           <input name="phone" placeholder="Phone" type="tel" value={formData.phone} onChange={handleChange} required />
           <input name="identification" placeholder="ID or Passport No" value={formData.identification} onChange={handleChange} required />
-          <input name="nationality" placeholder="Nationality" value={formData.nationality} onChange={handleChange} required />
+          
+          <select
+            name='nationality'
+            className="form-select"
+            value={formData.nationality}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select nationality</option>
+            {nationality.map((loc, idx) => (
+              <option key={idx} value={loc}>{loc}</option>
+            ))}
+          </select>
+      
+          {/* <input name="nationality" placeholder="Nationality" value={formData.nationality} onChange={handleChange} required /> */}
           <input name="tripId" placeholder="Trip ID" value={formData.tripId} onChange={handleChange} required />
           <input name="seatNumber" placeholder="Seat Number" value={formData.seatNumber} onChange={handleChange} required />
           <button type="submit" className="btn-submit">{initialData ? 'Save Changes' : 'Add Booking'}</button>

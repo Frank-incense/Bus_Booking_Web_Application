@@ -1,8 +1,7 @@
 // src/components/AdminLayout.jsx
-import React from 'react';
 import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
-import './AdminLayout.css'; // optional
+import './AdminLayout.css'; 
 import Navbar from './Navbar';
 
 const AdminLayout = () => {

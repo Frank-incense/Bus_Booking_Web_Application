@@ -17,9 +17,9 @@ const LoginForm = () => {
     setError("");
     try {
       await login(form);
-      navigate("/dashboard");
+      navigate("/admin");
     } catch (err) {
-      setError("Invalid email or password");
+      setError(err);
     }
   };
 

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 const AdminRoutesManager = () => {
   const [editRoute, setEditRoute] = useState(null);
   const [routes, setRoutes] = useState([])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filter, setFilter] = useState('');
 
   function handleEdit(route) {
       setEditRoute(route);
@@ -35,6 +37,23 @@ const AdminRoutesManager = () => {
       ])
   }
 
+  const filteredRoutes = routes.filter(route => {
+    const matchesSearch = route.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          route.origin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          route.destination.toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (filter === 'date') {
+      return matchesSearch && route.schedule; // Only those with schedule (you can customize)
+    }
+
+    if (filter === 'route') {
+      return matchesSearch && route.name; // Can be used to match based on route name
+    }
+
+    return matchesSearch;
+  });
+
+
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -53,12 +72,33 @@ const AdminRoutesManager = () => {
           type="text"
           className="form-control"
           placeholder="Search routes"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
       <div className="mb-4 d-flex gap-2">
-        <button className="btn btn-outline-secondary btn-sm">Date</button>
-        <button className="btn btn-outline-secondary btn-sm">Route</button>
+        <button 
+          className={`btn btn-outline-secondary btn-sm ${filter === 'date' ? 'active' : ''}`}
+          onClick={() => setFilter('date')}
+        >
+          Date
+        </button>
+        <button 
+          className={`btn btn-outline-secondary btn-sm ${filter === 'route' ? 'active' : ''}`}
+          onClick={() => setFilter('route')}
+        >
+          Route
+        </button>
+        <button 
+          className="btn btn-outline-danger btn-sm"
+          onClick={() => {
+            setSearchTerm('');
+            setFilter('');
+          }}
+        >
+          Clear
+        </button>
       </div>
 
       <div className="table-responsive">
@@ -72,7 +112,7 @@ const AdminRoutesManager = () => {
             </tr>
           </thead>
           <tbody>
-            {routes.map((route) => (
+            {filteredRoutes.map((route) => (
               <tr key={route.name}>
                 <td>{route.name}</td>
                 <td>

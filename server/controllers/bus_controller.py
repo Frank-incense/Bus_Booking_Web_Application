@@ -71,3 +71,7 @@ class Routes(Resource):
         db.session.commit()
 
         return make_response(route.to_dict(), 201)
+    
+    class RouteById(Resource):
+        def patch(self, id):
+            pass

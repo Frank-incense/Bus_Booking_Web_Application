@@ -8,10 +8,21 @@ from flask_restful import Resource
 
 class Bookings(Resource):
     def get(self):
-        bookings = Booking.query.all()
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+
+        # Query and paginate
+        pagination = Booking.query.paginate(page=page, per_page=per_page, error_out=False)
+        bookings = pagination.items
 
         if bookings:
-            return make_response([booking.to_dict() for booking in bookings], 200)
+            return make_response(jsonify({
+                'data': [booking.to_dict() for booking in bookings],
+                'total': pagination.total,
+                'page': pagination.page,
+                'per_page': pagination.per_page,
+                'pages': pagination.pages
+            }), 200)
         return make_response(jsonify({'error': 'No bookings found'}))
 
     def post(self):

@@ -34,7 +34,7 @@
   margin-bottom: 20px;
 }
 
-.booking-modal-container form input {
+.booking-modal-container form input, input {
   width: 100%;
   padding: 10px;
   margin-bottom: 12px;
@@ -58,4 +58,10 @@
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+.form-select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
 }

@@ -3,7 +3,7 @@ from server.controllers.admin_controller import Approve, AdminSummary, BookingSt
 from server.controllers.image_controller import Images
 from server.controllers.booking_controller import Bookings
 from server.controllers.bus_controller import Routes, Buses
-from server.controllers.trip_controller import Trips, TripById
+from server.controllers.trip_controller import Trips, TripById, Search
 
 def addResource(api):
     api.add_resource(Register, '/api/signup')
@@ -19,3 +19,4 @@ def addResource(api):
     api.add_resource(TripById, '/api/trips/<int:id>')
     api.add_resource(Users, '/api/users')
     api.add_resource(UserById, '/api/users/<int:id>')
+    api.add_resource(Search, '/api/search')

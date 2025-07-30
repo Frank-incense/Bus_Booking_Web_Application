@@ -145,51 +145,63 @@ const Home = () => {
 
       {/* Footer Section */}
       <footer className="footer-section">
-        <div className="footer-columns">
-          <div className="footer-column social-icons">
-            <Icon name="facebook" />
-            <Icon name="twitter" />
-            <Icon name="instagram" />
-            <Icon name="youtube" />
-          </div>
-          <div className="footer-column">
-            <h4>Use cases</h4>
-            <ul>
-              <li>UI design</li>
-              <li>UX design</li>
-              <li>Wireframing</li>
-              <li>Programming</li>
-              <li>Development</li>
-              <li>Online whiteboard</li>
-              <li>Team collaboration</li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>Explore</h4>
-            <ul>
-              <li>Design</li>
-              <li>Prototyping</li>
-              <li>Development features</li>
-              <li>Design systems</li>
-              <li>Collaboration features</li>
-              <li>Design process</li>
-              <li>FigJam</li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>Resources</h4>
-            <ul>
-              <li>Blog</li>
-              <li>Best practices</li>
-              <li>Colors</li>
-              <li>Color wheel</li>
-              <li>Support</li>
-              <li>Developers</li>
-              <li>Resource library</li>
-            </ul>
-          </div>
-        </div>
-      </footer>
+  <div className="footer-columns">
+
+    {/* Social Media
+    <div className="footer-column">
+      <h4>Follow Us</h4>
+      <div className="social-icons d-flex gap-3">
+        <Icon name="facebook" />
+        <Icon name="twitter" />
+        <Icon name="instagram" />
+        <Icon name="youtube" />
+      </div>
+    </div> */}
+
+    {/* Top Routes in Kenya */}
+    <div className="footer-column">
+      <h4>Top Routes</h4>
+      <ul>
+        <li>Nairobi – Mombasa</li>
+        <li>Nairobi – Kisumu</li>
+        <li>Nairobi – Eldoret</li>
+        <li>Nairobi – Nakuru</li>
+        <li>Mombasa – Malindi</li>
+        <li>Kisumu – Kakamega</li>
+        <li>Nakuru – Kericho</li>
+      </ul>
+    </div>
+
+    {/* Popular Destinations in Kenya */}
+    <div className="footer-column">
+      <h4>Popular Destinations</h4>
+      <ul>
+        <li>Nairobi</li>
+        <li>Mombasa</li>
+        <li>Kisumu</li>
+        <li>Nakuru</li>
+        <li>Eldoret</li>
+        <li>Malindi</li>
+        <li>Naivasha</li>
+      </ul>
+    </div>
+
+    {/* Travel Resources */}
+    <div className="footer-column">
+      <h4>Resources</h4>
+      <ul>
+        <li>Travel Blog</li>
+        <li>Customer Support</li>
+        <li>Booking Help</li>
+        <li>Safety Guidelines</li>
+        <li>Terms & Conditions</li>
+        <li>Privacy Policy</li>
+      </ul>
+    </div>
+
+  </div>
+</footer>
+
     </div>
   );
 };

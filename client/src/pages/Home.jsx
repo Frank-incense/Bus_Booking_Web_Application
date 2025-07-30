@@ -130,7 +130,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <button className="view-all-routes-button">View all routes</button>
+        {/* <button className="view-all-routes-button">View all routes</button> */}
       </section>
 
       {/* Booking Modal */}

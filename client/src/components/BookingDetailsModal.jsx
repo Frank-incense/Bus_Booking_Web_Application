@@ -3,7 +3,7 @@ import './BookingDetailsModal.css';
 import { countries } from 'countries-list';
 
 const nationality = []
-console.log(countries)
+
 for (let country in countries){
   nationality.push(countries[country].name)
 }

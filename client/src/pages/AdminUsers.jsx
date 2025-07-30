@@ -190,7 +190,7 @@ const AdminUsers = () => {
 
                               if (res.ok) {
                                 alert("User deactivated.");
-                                setCurrentPage(1); // Refresh
+                                setCurrentPage(1);
                               } else {
                                 const err = await res.json();
                                 alert(err.message || "Failed to deactivate.");

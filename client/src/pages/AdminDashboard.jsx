@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AdminDashboard.css';
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -55,14 +53,6 @@ const AdminDashboard = () => {
     },
   };
 
-  // const dummyUser = {
-  //   name: 'Frankincense Okwemba',
-  //   role: 'Driver',
-  //   email: 'frankincense.okwemba@example.com',
-  //   phone: '+254712345678',
-  //   profilePic: '/profile.png',  
-  //   license: '/license.png'
-  // };
   const [users, setUsers] = useState([])
   const [pending, setPending] = useState([])
   const [summary, setSummary] = useState({})

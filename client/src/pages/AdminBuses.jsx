@@ -54,8 +54,8 @@ const AdminBuses = () => {
         // Optionally show an error message to the user
       });
 
-  },[])
-    console.log(buses)
+  },[user])
+    
   return (
     <div className="container py-4">
       {/* Buses Section */}

@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
   return (
     <header className="navbar">
       <div className="navbar-left">
         <img src="/logo.png" alt="Logo" className="logo" />
-        <nav className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/about">About Us</Link>
-          <Link to="/contact">Contact Us</Link>
-          {/* <div className="dropdown">
-            <button className="dropbtn">Services ▼</button>
-            <div className="dropdown-content">
-              <Link to="/service1">Bus-Hiring Services</Link>
-              <Link to="/service2">Parcel Services</Link>
-              
-            </div>
-          </div> */}
+        <button className="hamburger" onClick={toggleMenu}>
+          ☰
+        </button>
+        <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link to="/about" onClick={() => setMenuOpen(false)}>About Us</Link>
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link>
+          {/* You can re-enable dropdown here if needed */}
         </nav>
       </div>
       <div className="navbar-right">

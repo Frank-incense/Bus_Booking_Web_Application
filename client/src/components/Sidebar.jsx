@@ -31,11 +31,7 @@ const Sidebar = () => {
             Users
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/admin/reports" className={({ isActive }) => isActive ? 'active' : ''}>
-            Reports
-          </NavLink>
-        </li>
+        
       </ul>
     </aside>
   );

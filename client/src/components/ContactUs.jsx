@@ -52,13 +52,13 @@ const ContactUs = () => {
         <div className="location-grid">
           <div className="location-card">
             <div className="location-image">[Image]</div>
-            <h4>Sydney</h4>
-            <p>123 Sydney Lane</p>
+            <h4>Nairobi</h4>
+            <p>123 Ngong Lane Plaza</p>
           </div>
           <div className="location-card">
             <div className="location-image">[Image]</div>
-            <h4>New York</h4>
-            <p>456 Manhattan St</p>
+            <h4>Mombasa</h4>
+            <p>456 Mombasa Rd</p>
           </div>
         </div>
       </section>
@@ -69,7 +69,7 @@ const ContactUs = () => {
         <blockquote>
           “Booking a bus was incredibly smooth and clear. I would recommend this service to anyone!”
         </blockquote>
-        <p className="testimonial-author">— Rachel M., Customer</p>
+        <p className="testimonial-author">— Julius Mwangi., Customer</p>
       </section>
 
       {/* Newsletter Section

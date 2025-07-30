@@ -11,7 +11,14 @@ const Navbar = () => {
           <Link to="/">Home</Link>
           <Link to="/about">About Us</Link>
           <Link to="/contact">Contact Us</Link>
-          
+          {/* <div className="dropdown">
+            <button className="dropbtn">Services ▼</button>
+            <div className="dropdown-content">
+              <Link to="/service1">Bus-Hiring Services</Link>
+              <Link to="/service2">Parcel Services</Link>
+              
+            </div>
+          </div> */}
         </nav>
       </div>
       <div className="navbar-right">

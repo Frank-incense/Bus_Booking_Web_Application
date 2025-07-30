@@ -1,73 +1,66 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
 import Carousel from "../components/Carousel"
-import DateSlider from "../components/DateSlider"
 import TripSearchBar from "../components/SearchBar"
-import TripFilterSidebar from "../components/TripFilterSidebar"
 import TripResultsList from "../components/TripResultsList"
+import BusBooking from "../components/BusBooking"
 
-function SearchPage(){
-  const [filters, setFilters] = useState({ operators: [], priceRange: [0, 5000] });
-  const mockTrips = [
-  {
-    id: 1,
-    operator: 'Modern Coast',
-    from: 'Nairobi',
-    to: 'Mombasa',
-    date: '2025-07-17',
-    departure: '08:00',
-    price: 1500,
-  },
-  {
-    id: 2,
-    operator: 'Dreamline',
-    from: 'Nairobi',
-    to: 'Kisumu',
-    date: '2025-07-18',
-    departure: '07:30',
-    price: 1800,
-  },
-  {
-    id: 3,
-    operator: 'Guardian',
-    from: 'Nairobi',
-    to: 'Eldoret',
-    date: '2025-07-17',
-    departure: '09:00',
-    price: 1200,
-  },
-  // Add more as needed
-];
+function SearchPage() {
+  const location = useLocation();
+  const [results, setResults] = useState([]);
+  const [selectedTrip, setSelectedTrip] = useState(null);
 
-  const filteredTrips = mockTrips.filter((trip) => {
-    const matchesOperator = filters.operators.length
-      ? filters.operators.includes(trip.operator)
-      : true;
-    const matchesPrice =
-      trip.price >= filters.priceRange[0] && trip.price <= filters.priceRange[1];
+  const handleCloseModal = () => setSelectedTrip(null);
 
-    return  matchesOperator && matchesPrice;
-  });
+  const getQueryParams = () => {
+    const params = new URLSearchParams(location.search);
+    return {
+      from: params.get('from') || '',
+      to: params.get('to') || '',
+      departureDate: params.get('departureDate') || '',
+      returnDate: params.get('returnDate') || '',
+    };
+  };
+
+  const fetchResults = async (query) => {
+    const res = await fetch(`/api/search?${new URLSearchParams(query)}`);
+    const data = await res.json();
+    setResults(data);
+  };
+
+  useEffect(() => {
+    const query = getQueryParams();
+    fetchResults(query);
+  }, [location.search]);
+  console.log(selectedTrip)
+
   return (
     <main>
-      <Carousel/>
-      <TripSearchBar/>
+      <Carousel />
+      <TripSearchBar />
       <div className="container">
-        <div className="container-fluid mt-4">
-          <div className="row">
-            <div className="col-md-3">
-              <TripFilterSidebar filters={filters} setFilters={setFilters} />
-            </div>
-            <div className="col-md-9">
-              <TripResultsList trips={filteredTrips} />
-            </div>
+        <div className="row">
+          {/* <div className="col-md-3">
+            <TripFilterSidebar filters={filters} setFilters={setFilters} />
           </div>
+          <div className="col-md-9">
+            
+          </div> */}
+          <TripResultsList trips={results} onBook={setSelectedTrip}/>
         </div>
       </div>
-      
-
-
+      {selectedTrip && (
+        <BusBooking
+          tripId={selectedTrip.tripId}
+          operator={selectedTrip.operator}
+          departure={`${selectedTrip.departure} ${selectedTrip.from}`}
+          arrival={`Estimated ${selectedTrip.arrival} ${selectedTrip.to}`}
+          bookings={selectedTrip.bookings}
+          onClose={handleCloseModal}
+        />
+      )}
     </main>
-  )
+  );
 }
 
-export default SearchPage
+export default SearchPage;

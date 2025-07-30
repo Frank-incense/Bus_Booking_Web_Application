@@ -3,14 +3,12 @@ import './Home.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import BusBooking from '../components/BusBooking';
+import TripSearchBar from '../components/SearchBar';
 
 // Placeholder for an icon component if you have one
 const Icon = ({ name }) => <i className={`fa fa-${name}`}></i>;
 
 const Home = () => {
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(null);
 
@@ -23,13 +21,6 @@ const Home = () => {
     { id: 6, from: 'Nairobi', to: 'Eldoret', time: '5h', price: 'Kes 900' },
   ];
 
-  const handleSearch = () => {
-    console.log('Searching for:', {
-      fromDate,
-      toDate,
-      selectedDate: selectedDate?.toLocaleDateString(),
-    });
-  };
 
   return (
     <div className="home-container">
@@ -51,49 +42,7 @@ const Home = () => {
 
       {/* Search Bar Section */}
       <section className="search-bar-section">
-        <div className="search-inputs">
-          <div className="input-group">
-            <label htmlFor="from">From</label>
-            <input
-              type="text"
-              id="from"
-              placeholder="Origin"
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-            />
-            <span className="clear-input">X</span>
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="to">To</label>
-            <input
-              type="text"
-              id="to"
-              placeholder="Destination"
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-            />
-            <span className="clear-input">X</span>
-          </div>
-
-          <div className="input-group date-input-group">
-            <label htmlFor="date">Select date</label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              placeholderText="Choose a date"
-              dateFormat="yyyy-MM-dd"
-              minDate={new Date()}
-              id="date"
-              className="date-picker-input"
-              required
-            />
-          </div>
-
-          <button className="search-button" onClick={handleSearch}>
-            SEARCH
-          </button>
-        </div>
+        <TripSearchBar/>
       </section>
 
       {/* Popular Routes Section */}
@@ -117,13 +66,13 @@ const Home = () => {
                 </h3>
               </div>
               <div className="route-details">
-                <div className="profile-pic-container">
+                {/* <div className="profile-pic-container">
                   <img
                     src="https://via.placeholder.com/30"
                     alt="Profile"
                     className="profile-pic"
                   />
-                </div>
+                </div> */}
                 <span>{route.time}</span>
                 <span>{route.price}</span>
               </div>

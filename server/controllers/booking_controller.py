@@ -27,6 +27,7 @@ class Bookings(Resource):
 
     def post(self):
         data = request.get_json()
+        
         customer = Customer(
             first_name = data.get('firstName'),
             second_name = data.get('secondName'),

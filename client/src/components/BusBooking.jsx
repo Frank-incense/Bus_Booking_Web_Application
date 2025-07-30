@@ -1,88 +1,101 @@
 import React, { useState } from "react";
 import "./BusBooking.css";
+import { useNavigate } from "react-router-dom";
 
-const seatRows = 10;
+const seatRows = 12;
 const seatColumns = 4;
 const pricePerSeat = 1750;
 
-const initialBookedSeats = new Set(["1B", "2B", "3B"]);
+
+; // example booked seats
+
 const BusBooking = ({
-  operator = "Easy Coach",
+  tripId,
+  operator = "",
   departure = "07:00 Nairobi",
   arrival = "04:00 Kisumu",
   onClose,
+  bookings
 }) => {
+  const navigate = useNavigate()
+  const initialBookedSeats = new Set(bookings)
   const [selectedSeats, setSelectedSeats] = useState(new Set());
   const [bookedSeats, setBookedSeats] = useState(initialBookedSeats);
-
-  const toggleSeat = (seat) => {
-    if (bookedSeats.has(seat)) return;
-    const newSelectedSeats = new Set(selectedSeats);
-    if (newSelectedSeats.has(seat)) {
-      newSelectedSeats.delete(seat);
-    } else {
-      newSelectedSeats.add(seat);
-    }
-    setSelectedSeats(newSelectedSeats);
-  };
-
-  const totalFare = selectedSeats.size * pricePerSeat;
-
+  const seats = []
   const handleBookSeats = () => {
     if (selectedSeats.size === 0) return;
     alert("Seats booked successfully!");
+    navigate("/book", {
+      state: {
+        tripId: tripId,
+        selectedSeats: seats
+      }
+    });
+
     const newBookedSeats = new Set(bookedSeats);
     selectedSeats.forEach((seat) => newBookedSeats.add(seat));
     setBookedSeats(newBookedSeats);
     setSelectedSeats(new Set());
   };
 
-  const renderSeat = (row, col) => {
-    let seatLabel = `${row}${String.fromCharCode(65 + col)}`;
-    if (row === 1 && col === 2) {
-      seatLabel = "DR";
+  const toggleSeat = (seatNumber) => {
+    if (bookedSeats.has(seatNumber)) return;
+
+    const newSelectedSeats = new Set(selectedSeats);
+    if (newSelectedSeats.has(seatNumber)) {
+      newSelectedSeats.delete(seatNumber);
+    } else {
+      newSelectedSeats.add(seatNumber);
     }
-    const isBooked = bookedSeats.has(seatLabel);
-    const isSelected = selectedSeats.has(seatLabel);
+    setSelectedSeats(newSelectedSeats);
+  };
+
+  const totalFare = selectedSeats.size * pricePerSeat;
+
+  
+
+  const renderSeat = (seatNumber) => {
+    const isBooked = bookedSeats.has(seatNumber);
+    const isSelected = selectedSeats.has(seatNumber);
 
     let seatClass = "seat empty-seat";
-    if (seatLabel === "DR") {
-      seatClass = "seat driver-seat";
-    } else if (isBooked) {
+    if (isBooked) {
       seatClass = "seat booked-seat";
     } else if (isSelected) {
       seatClass = "seat selected-seat";
+      seats.push(seatNumber)
     }
 
     return (
       <div
-        key={seatLabel}
+        key={seatNumber}
         className={seatClass}
-        onClick={() => {
-          if (seatLabel === "DR") return;
-          toggleSeat(seatLabel);
-        }}
-        title={seatLabel}
-        style={seatLabel === "DR" ? { backgroundColor: "red", color: "white", fontWeight: "bold", cursor: "default" } : {}}
+        onClick={() => toggleSeat(seatNumber)}
+        title={`Seat ${seatNumber}`}
       >
-        {seatLabel}
+        {seatNumber}
       </div>
     );
   };
 
   const renderSeatsGrid = () => {
     const rows = [];
-    for (let row = 1; row <= seatRows; row++) {
+    let seatNumber = 1;
+
+    for (let row = 0; row < seatRows; row++) {
       const seatsLeft = [];
       const seatsRight = [];
-      seatsLeft.push(renderSeat(row, 0));
-      seatsLeft.push(renderSeat(row, 1));
-      if (row === 1) {
-        seatsRight.push(renderSeat(row, 2));
-      } else {
-        seatsRight.push(renderSeat(row, 2));
-        seatsRight.push(renderSeat(row, 3));
+
+      for (let col = 0; col < seatColumns; col++) {
+        const seat = renderSeat(seatNumber);
+        if (col < 2) {
+          seatsLeft.push(seat);
+        } else {
+          seatsRight.push(seat);
+        }
+        seatNumber++;
       }
+
       rows.push(
         <div
           key={row}
@@ -98,6 +111,7 @@ const BusBooking = ({
         </div>
       );
     }
+
     return rows;
   };
 
@@ -109,31 +123,23 @@ const BusBooking = ({
           ×
         </button>
       </div>
+
       <div className="bus-booking-operator-time">
         <strong>{operator}</strong>
         <span>{departure}</span>
         <span>{arrival}</span>
       </div>
+
       <div className="bus-booking-content">
         <div className="seats-selection">
           <div className="legend">
-            <div>
-              <div className="seat empty-seat"></div> Empty seat
-            </div>
-            <div>
-              <div className="seat booked-seat"></div> Booked seat
-            </div>
-            <div>
-              <div className="seat selected-seat"></div> Selected seat
-            </div>
-            <div>
-              <div className="seat driver-seat" style={{backgroundColor: 'red', color: 'white', fontWeight: 'bold', cursor: 'default', display: 'inline-flex', justifyContent: 'center', alignItems: 'center'}}>
-                DR
-              </div> Driver seat
-            </div>
+            <div><div className="seat empty-seat"></div> Empty seat</div>
+            <div><div className="seat booked-seat"></div> Booked seat</div>
+            <div><div className="seat selected-seat"></div> Selected seat</div>
           </div>
           <div className="seats-grid">{renderSeatsGrid()}</div>
         </div>
+
         <div className="booking-details">
           <h4>Booking Details</h4>
           <p>Selected seats: {selectedSeats.size}</p>

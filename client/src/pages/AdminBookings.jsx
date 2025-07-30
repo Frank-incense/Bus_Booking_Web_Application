@@ -68,7 +68,7 @@ const AdminBookings = () => {
       setPage(newPage);
     }
   };
-
+  console.log(bookings)
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -102,12 +102,12 @@ const AdminBookings = () => {
           <tbody>
             {bookings.map((b, index) => (
               <tr key={`booking-${index}`}>
-                <td>{b.firstName} {b.secondName}</td>
-                <td>{b.tripId}</td>
-                <td>{b.departure || "N/A"}</td>
-                <td>{b.arrival || "N/A"}</td>
+                <td>{b.customer.first_name} {b.customer.second_name}</td>
+                <td>{b.trip.bus.registration}</td>
+                <td>{b.trip.departure || "N/A"}</td>
+                <td>{b.trip.arrival || "N/A"}</td>
                 <td className="text-primary">{b.status}</td>
-                <td>{b.bookDate}</td>
+                <td>{b.created_at}</td>
                 <td className="d-flex gap-2">
                   <button
                     className="btn btn-sm btn-outline-primary"

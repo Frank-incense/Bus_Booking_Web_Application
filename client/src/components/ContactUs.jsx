@@ -16,23 +16,23 @@ const ContactUs = () => {
           <span>📧</span>
           <h3>Email</h3>
           <p>For any general inquiries</p>
-          <a href="mailto:support@busbooking.com">support@busbooking.com</a>
+          <a href="mailto:support@travelhub.com">support@travelhub.com</a>
         </div>
         <div className="contact-icon">
           <span>📞</span>
           <h3>Phone</h3>
           <p>Chat with us directly</p>
-          <p>+123 456 7890</p>
+          <p>+254 797 760 731</p>
         </div>
         <div className="contact-icon">
           <span>📍</span>
           <h3>Office</h3>
           <p>Visit us physically</p>
-          <p>123 Bus St, Nairobi, KE</p>
+          <p>Ngong Lane Plaza, Nairobi, KE</p>
         </div>
       </section>
 
-      {/* Form Section */}
+      {/* Form Section
       <section className="contact-form-section">
         <h2>Get in Touch</h2>
         <p>We’d love to hear from you.</p>
@@ -43,7 +43,7 @@ const ContactUs = () => {
           <textarea placeholder="Message" rows="5"></textarea>
           <button type="submit">Send</button>
         </form>
-      </section>
+      </section> */}
 
       {/* Locations Section */}
       <section className="contact-locations">
@@ -52,13 +52,13 @@ const ContactUs = () => {
         <div className="location-grid">
           <div className="location-card">
             <div className="location-image">[Image]</div>
-            <h4>Sydney</h4>
-            <p>123 Sydney Lane</p>
+            <h4>Nairobi</h4>
+            <p>123 Ngong Lane Plaza</p>
           </div>
           <div className="location-card">
             <div className="location-image">[Image]</div>
-            <h4>New York</h4>
-            <p>456 Manhattan St</p>
+            <h4>Mombasa</h4>
+            <p>456 Mombasa Rd</p>
           </div>
         </div>
       </section>
@@ -69,10 +69,10 @@ const ContactUs = () => {
         <blockquote>
           “Booking a bus was incredibly smooth and clear. I would recommend this service to anyone!”
         </blockquote>
-        <p className="testimonial-author">— Rachel M., Customer</p>
+        <p className="testimonial-author">— Julius Mwangi., Customer</p>
       </section>
 
-      {/* Newsletter Section */}
+      {/* Newsletter Section
       <section className="newsletter-section">
         <h3>Stay Updated with Our News</h3>
         <p>Receive updates about new routes and features.</p>
@@ -80,7 +80,7 @@ const ContactUs = () => {
           <input type="email" placeholder="Your Email" />
           <button>Subscribe</button>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="footer">

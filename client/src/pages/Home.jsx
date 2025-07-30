@@ -3,14 +3,12 @@ import './Home.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import BusBooking from '../components/BusBooking';
+import TripSearchBar from '../components/SearchBar';
 
 // Placeholder for an icon component if you have one
 const Icon = ({ name }) => <i className={`fa fa-${name}`}></i>;
 
 const Home = () => {
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(null);
 
@@ -23,13 +21,6 @@ const Home = () => {
     { id: 6, from: 'Nairobi', to: 'Eldoret', time: '5h', price: 'Kes 900' },
   ];
 
-  const handleSearch = () => {
-    console.log('Searching for:', {
-      fromDate,
-      toDate,
-      selectedDate: selectedDate?.toLocaleDateString(),
-    });
-  };
 
   return (
     <div className="home-container">
@@ -51,49 +42,7 @@ const Home = () => {
 
       {/* Search Bar Section */}
       <section className="search-bar-section">
-        <div className="search-inputs">
-          <div className="input-group">
-            <label htmlFor="from">From</label>
-            <input
-              type="text"
-              id="from"
-              placeholder="Origin"
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-            />
-            <span className="clear-input">X</span>
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="to">To</label>
-            <input
-              type="text"
-              id="to"
-              placeholder="Destination"
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-            />
-            <span className="clear-input">X</span>
-          </div>
-
-          <div className="input-group date-input-group">
-            <label htmlFor="date">Select date</label>
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              placeholderText="Choose a date"
-              dateFormat="yyyy-MM-dd"
-              minDate={new Date()}
-              id="date"
-              className="date-picker-input"
-              required
-            />
-          </div>
-
-          <button className="search-button" onClick={handleSearch}>
-            SEARCH
-          </button>
-        </div>
+        <TripSearchBar/>
       </section>
 
       {/* Popular Routes Section */}
@@ -117,20 +66,20 @@ const Home = () => {
                 </h3>
               </div>
               <div className="route-details">
-                <div className="profile-pic-container">
+                {/* <div className="profile-pic-container">
                   <img
                     src="https://via.placeholder.com/30"
                     alt="Profile"
                     className="profile-pic"
                   />
-                </div>
+                </div> */}
                 <span>{route.time}</span>
                 <span>{route.price}</span>
               </div>
             </div>
           ))}
         </div>
-        <button className="view-all-routes-button">View all routes</button>
+        {/* <button className="view-all-routes-button">View all routes</button> */}
       </section>
 
       {/* Booking Modal */}
@@ -145,51 +94,63 @@ const Home = () => {
 
       {/* Footer Section */}
       <footer className="footer-section">
-        <div className="footer-columns">
-          <div className="footer-column social-icons">
-            <Icon name="facebook" />
-            <Icon name="twitter" />
-            <Icon name="instagram" />
-            <Icon name="youtube" />
-          </div>
-          <div className="footer-column">
-            <h4>Use cases</h4>
-            <ul>
-              <li>UI design</li>
-              <li>UX design</li>
-              <li>Wireframing</li>
-              <li>Programming</li>
-              <li>Development</li>
-              <li>Online whiteboard</li>
-              <li>Team collaboration</li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>Explore</h4>
-            <ul>
-              <li>Design</li>
-              <li>Prototyping</li>
-              <li>Development features</li>
-              <li>Design systems</li>
-              <li>Collaboration features</li>
-              <li>Design process</li>
-              <li>FigJam</li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>Resources</h4>
-            <ul>
-              <li>Blog</li>
-              <li>Best practices</li>
-              <li>Colors</li>
-              <li>Color wheel</li>
-              <li>Support</li>
-              <li>Developers</li>
-              <li>Resource library</li>
-            </ul>
-          </div>
-        </div>
-      </footer>
+  <div className="footer-columns">
+
+    {/* Social Media
+    <div className="footer-column">
+      <h4>Follow Us</h4>
+      <div className="social-icons d-flex gap-3">
+        <Icon name="facebook" />
+        <Icon name="twitter" />
+        <Icon name="instagram" />
+        <Icon name="youtube" />
+      </div>
+    </div> */}
+
+    {/* Top Routes in Kenya */}
+    <div className="footer-column">
+      <h4>Top Routes</h4>
+      <ul>
+        <li>Nairobi – Mombasa</li>
+        <li>Nairobi – Kisumu</li>
+        <li>Nairobi – Eldoret</li>
+        <li>Nairobi – Nakuru</li>
+        <li>Mombasa – Malindi</li>
+        <li>Kisumu – Kakamega</li>
+        <li>Nakuru – Kericho</li>
+      </ul>
+    </div>
+
+    {/* Popular Destinations in Kenya */}
+    <div className="footer-column">
+      <h4>Popular Destinations</h4>
+      <ul>
+        <li>Nairobi</li>
+        <li>Mombasa</li>
+        <li>Kisumu</li>
+        <li>Nakuru</li>
+        <li>Eldoret</li>
+        <li>Malindi</li>
+        <li>Naivasha</li>
+      </ul>
+    </div>
+
+    {/* Travel Resources */}
+    <div className="footer-column">
+      <h4>Resources</h4>
+      <ul>
+        <li>Travel Blog</li>
+        <li>Customer Support</li>
+        <li>Booking Help</li>
+        <li>Safety Guidelines</li>
+        <li>Terms & Conditions</li>
+        <li>Privacy Policy</li>
+      </ul>
+    </div>
+
+  </div>
+</footer>
+
     </div>
   );
 };

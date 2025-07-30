@@ -36,10 +36,7 @@ const AboutUs = () => {
       <section className="hero-section">
         <h1>Booking Made Easy</h1>
         <p>Our mission is to revolutionize bus travel with seamless booking and management solutions for everyone.</p>
-        <div className="hero-buttons">
-          <button className="primary-btn">Learn More</button>
-          <button className="secondary-btn">Join Us</button>
-        </div>
+        
       </section>
 
       {/* Journey Section */}
@@ -47,8 +44,8 @@ const AboutUs = () => {
         <div className="journey-text">
           <h2>Our Journey: From Concept to Leading Bus Booking Solution</h2>
           <p>
-            Founded in 2015, our company began with a vision to revolutionize the bus booking experience.
-            Over the years, we have grown into a powerful platform, serving millions of passengers and
+            Founded in 2025, our company began with a vision to revolutionize the bus booking experience.
+            Over the months, we have grown into a powerful platform, serving millions of passengers and
             empowering operators with advanced management tools.
           </p>
         </div>

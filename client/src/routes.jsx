@@ -17,6 +17,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminReports from "./pages/AdminReports";
 import Home from "./pages/Home";
 import SearchPage from "./pages/TripSearchPage";
+import UserBookingPage from "./pages/BookingPage";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,8 @@ const router = createBrowserRouter([
       { path: "contact", element: <ContactUs /> },
       { path: "service1", element: <Hiring /> },
       { path: "service2", element: <Parcel /> },
-      { path: 'search', element: <SearchPage/>}
+      { path: 'search', element: <SearchPage/>},
+      { path:'book', element:<UserBookingPage/>}
     ],
   },
   {

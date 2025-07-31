@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './BookingDetailsModal.css';
 import { countries } from 'countries-list';
 
@@ -7,7 +7,7 @@ const nationality = []
 for (let country in countries){
   nationality.push(countries[country].name)
 }
-console.log(nationality)
+
 const BookingDetailsModal = ({ onSave, onClose, initialData }) => {
   const [formData, setFormData] = useState({
     firstName: '',

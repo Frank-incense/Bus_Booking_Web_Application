@@ -15,7 +15,7 @@ class Buses(Resource):
         # Conditional filtering
         query = Bus.query
         if driver_id:
-            query = query.filter_by(driver_id=driver_id)
+            query = query.filter_by(user_id=driver_id)
 
         # Pagination
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)

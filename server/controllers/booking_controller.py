@@ -5,6 +5,7 @@ from server.models import (User, Operator, Booking, Trip,
 from sqlalchemy import func
 from server.config import db
 from flask_restful import Resource
+from sqlalchemy.orm import joinedload
 
 class Bookings(Resource):
     def get(self):
@@ -12,11 +13,12 @@ class Bookings(Resource):
         per_page = request.args.get('per_page', 10, type=int)
         driver_id = request.args.get('driver_id', type=int)
 
-        query = Booking.query
+        query = Booking.query.options(
+            joinedload(Booking.trip).joinedload(Trip.bus)
+        )
 
-        # If a driver_id is provided (driver is logged in), filter bookings by driver
         if driver_id:
-            query = query.filter_by(driver_id=driver_id)
+            query = query.join(Booking.trip).join(Trip.bus).filter_by(user_id=driver_id)
 
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)
         bookings = pagination.items

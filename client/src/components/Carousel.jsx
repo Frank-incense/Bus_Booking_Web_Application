@@ -1,6 +1,6 @@
 import React from "react";
 
-const Carousel = () => {
+const Carousel = ({images}) => {
   const carouselImages = [
     {
       src: "https://res.cloudinary.com/delbvi5dc/image/upload/v1752994567/cld-sample-2.jpg",

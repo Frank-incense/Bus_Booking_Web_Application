@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import './Home.css';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import BusBooking from '../components/BusBooking';
 import TripSearchBar from '../components/SearchBar';
+import { AuthContext } from '../context/AuthContext';
 
-// Placeholder for an icon component if you have one
+
 const Icon = ({ name }) => <i className={`fa fa-${name}`}></i>;
 
 const Home = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const {images} = useContext(AuthContext)
 
   const popularRoutes = [
     { id: 1, from: 'Nairobi', to: 'Kisumu', time: '6h 21min', price: 'Kes 1,500' },
@@ -20,18 +21,22 @@ const Home = () => {
     { id: 5, from: 'Nakuru', to: 'Kitale', time: '4h 26min', price: 'Kes 1,000' },
     { id: 6, from: 'Nairobi', to: 'Eldoret', time: '5h', price: 'Kes 900' },
   ];
-
+  
+  const pics = images?.static
+  console.log(pics, images)
 
   return (
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero-section">
         <img
-          src="https://via.placeholder.com/1500x500/ADD8E6/FFFFFF?text=Bus+on+Road"
+          src='/passport-3713945_640.jpg'
           alt="Bus on a road"
           className="hero-image"
         />
+        {/* <Carousel images={images}/> */}
       </section>
+      
 
       {/* Journey Hub Logo & Tagline */}
       <section className="journey-hub-intro">

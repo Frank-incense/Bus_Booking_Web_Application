@@ -32,7 +32,7 @@ function SearchPage() {
     const query = getQueryParams();
     fetchResults(query);
   }, [location.search]);
-  console.log(selectedTrip)
+  
 
   return (
     <main>

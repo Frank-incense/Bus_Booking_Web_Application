@@ -13,7 +13,7 @@ const AdminBookings = () => {
   const {user} = useContext(AuthContext)
 
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1); // Total pages from backend
+  const [pages, setPages] = useState(1); 
 
   const PER_PAGE = 10;
 
@@ -21,7 +21,7 @@ const AdminBookings = () => {
     try {
       let url = `/api/bookings?page=${pageNum}&per_page=${PER_PAGE}`;
 
-      // Assuming you have access to the current user's info
+      
       if (user?.role === 'Driver') {
         url += `&driver_id=${user.id}`;
       }
@@ -30,7 +30,7 @@ const AdminBookings = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setBookings(data.data || []);
+        setBookings(data.data);
         setPages(data.pages || 1);
         setPage(data.page || 1);
       }
@@ -71,14 +71,14 @@ const AdminBookings = () => {
     setSelectedCustomer(customer);
     setShowCustomerModal(true);
   };
-  console.log(page, pages)
+  
   const handlePageChange = (direction) => {
     const newPage = direction === "prev" ? page - 1 : page + 1;
     if (newPage >= 1 && newPage <= pages) {
       setPage(newPage);
     }
   };
-  console.log(bookings)
+  
   return (
     <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -110,7 +110,7 @@ const AdminBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((b, index) => (
+            {bookings?.error?<p>Now users found</p>:bookings.map((b, index) => (
               <tr key={`booking-${index}`}>
                 <td>{b.customer.first_name} {b.customer.second_name}</td>
                 <td>{b.trip.bus.registration}</td>

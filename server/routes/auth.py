@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import unset_access_cookies, create_access_token, set_access_cookies, jwt_required, get_jwt_identity
 from server.models.user import User
 from server.config import db
 
@@ -74,17 +74,18 @@ def login():
         logging.warning(f"Login failed: User {email} not active")
         return jsonify({'error': 'User not active'}), 403
 
-    token = create_access_token(identity=user.id)
-
-    logging.info(f"Login successful for email: {email}")
-
-    return jsonify({
+    token = create_access_token(identity=user.id, expires_delta=False)
+    response = jsonify({
         'message': 'Login successful',
         'access_token': token,
         'user': user.to_dict()
-    }), 200
+    })
+    set_access_cookies(response, token)
 
-##get current user
+    logging.info(f"Login successful for email: {email}")
+
+    return response, 200
+
 
 @auth_bp.route('/api/me', methods=['GET'])
 @jwt_required()

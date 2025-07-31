@@ -35,4 +35,9 @@ def uploadDocument(document, id):
 class Images(Resource):
     def get(self):
         images = cloudinary.Search().expression('folder:"static"').execute()
-        return images
+        shots = cloudinary.Search().expression('folder:"headshots"').execute()
+        pics = [{
+            'name': img['filename'],
+            'image_url': img['secure_url']
+        } for img in images['resources']]
+        return {'static':pics, 'headshots':[{'name':img['filename'],'image_url':img['secure_url']} for img in shots['resources']]}

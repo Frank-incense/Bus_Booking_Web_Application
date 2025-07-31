@@ -66,3 +66,29 @@ class Bookings(Resource):
         }
 
         return make_response(booking_data, 201)
+
+    def put(self, booking_id):
+        data = request.get_json()
+        booking = Booking.query.get(booking_id)
+        if not booking:
+            return make_response(jsonify({'error': 'Booking not found'}), 404)
+
+        # Update allowed fields
+        if 'seat' in data:
+            booking.seat = data['seat']
+        if 'status' in data:
+            booking.status = data['status']
+
+        db.session.commit()
+
+        return make_response(jsonify({'message': 'Booking updated successfully'}), 200)
+
+    def delete(self, booking_id):
+        booking = Booking.query.get(booking_id)
+        if not booking:
+            return make_response(jsonify({'error': 'Booking not found'}), 404)
+
+        db.session.delete(booking)
+        db.session.commit()
+
+        return make_response(jsonify({'message': 'Booking deleted successfully'}), 200)

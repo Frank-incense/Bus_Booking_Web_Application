@@ -15,6 +15,7 @@ def addResource(api):
     api.add_resource(DriverSummary, '/api/summary/<int:id>')
     api.add_resource(BookingStats, '/api/booking-stats')
     api.add_resource(Bookings, '/api/bookings')
+    api.add_resource(Bookings, '/api/bookings/<int:booking_id>')
     api.add_resource(Routes, '/api/routes')
     api.add_resource(Buses, '/api/buses')
     api.add_resource(Trips, '/api/trips')

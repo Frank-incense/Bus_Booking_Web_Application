@@ -10,9 +10,15 @@ class Buses(Resource):
     def get(self):
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 7, type=int)
+        driver_id = request.args.get('driver_id', type=int)
 
-        # Query and paginate
-        pagination = Bus.query.paginate(page=page, per_page=per_page, error_out=False)
+        # Conditional filtering
+        query = Bus.query
+        if driver_id:
+            query = query.filter_by(driver_id=driver_id)
+
+        # Pagination
+        pagination = query.paginate(page=page, per_page=per_page, error_out=False)
         buses = pagination.items
 
         if buses:
@@ -23,7 +29,9 @@ class Buses(Resource):
                 'per_page': pagination.per_page,
                 'pages': pagination.pages
             }), 200)
+
         return make_response(jsonify({'error': 'No buses found'}), 404)
+
 
     def post(self):
         data = request.form

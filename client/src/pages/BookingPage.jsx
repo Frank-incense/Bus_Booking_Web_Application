@@ -43,7 +43,7 @@ function UserBookingPage() {
         );
         await Promise.all(requests);
         alert("Booking successful!");
-        // navigate("/confirmation");
+        navigate("/");
     } catch (err) {
         console.error(err);
         alert("Booking failed.");

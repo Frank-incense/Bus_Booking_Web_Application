@@ -6,6 +6,7 @@ from server.controllers.image_controller import uploadDocument, uploadImage
 from sqlalchemy import func
 from server.config import db
 from flask_restful import Resource
+from flask_mail import Message
 
 def str_to_bool(value):
     return str(value).lower() in ['true', '1', 'yes', 'on']
@@ -20,6 +21,26 @@ class AdminSummary(Resource):
         return make_response(jsonify({
             'drivers': len(drivers),
             'users': len(users),
+            'bookings': len(bookings),
+            'routes': len(routes)
+        }), 200)
+class DriverSummary(Resource):
+
+    def get(self, id):
+        driver = User.query.filter_by(id=id).first()
+        buses = Bus.query.filter_by(user_id=driver.id).all()
+        trips = []
+        for trip in buses:
+            trips.extend(trip.trips)
+        bookings = []
+        for booking in trips:
+            bookings.extend(booking.bookings)
+
+        routes = [route for route in trips]
+
+        return make_response(jsonify({
+            'trips': trips,
+            'revenue': sum(trip.cost for trip in trips),
             'bookings': len(bookings),
             'routes': len(routes)
         }), 200)
@@ -66,33 +87,48 @@ class PendingApprovals(Resource):
     
 class BookingStats(Resource):
     def get(self):
+        period = request.args.get('period', 'monthly')
+
+        if period == 'weekly':
+            date_trunc = func.date_trunc('week', Booking.created_at)
+            date_format = '%Y-W%W'
+        elif period == 'yearly':
+            date_trunc = func.date_trunc('year', Booking.created_at)
+            date_format = '%Y'
+        else:  # default monthly
+            date_trunc = func.date_trunc('month', Booking.created_at)
+            date_format = '%Y-%m'
+
         results = (
             db.session.query(
-                func.date_trunc('month', Booking.created_at).label('month'),
+                date_trunc.label('period'),
                 func.count(Booking.id).label('booking_count')
             )
-            .group_by(func.date_trunc('month', Booking.created_at))
-            .order_by(func.date_trunc('month', Booking.created_at))
+            .group_by(date_trunc)
+            .order_by(date_trunc)
             .all()
         )
 
-        response = [
+        res = [
             {
-                'month': result.month.strftime('%Y-%m'),
+                'period': result.period.strftime(date_format),
                 'count': result.booking_count
             }
             for result in results
         ]
-        return jsonify(response), 200
+        return make_response(jsonify(res), 200)
+
 
 class Driver(Resource):
     def get(self):
         users = User.query.filter_by(role='Driver').all()
+        from server.app import mail
+        msg = Message('Test Email', recipients=['frankincensew@gmail.com'])
+        msg.body = 'This is a test email sent from Flask-Mail.'
+        
+        # mail.send(msg)
 
-        if users:
-            for user in users:
-                if user.license:
-                    user.license = user.license.replace('/upload/', '/upload/fl_attachment:false/')
+        if users:   
             return make_response([user.to_dict() for user in users], 200)
         return make_response({
             'Error': 'No drivers found.'

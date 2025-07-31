@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css'; 
+import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = () => {
+  const {user} = useContext(AuthContext)
   return (
     <aside className="sidebar">
       <ul>
@@ -26,11 +28,12 @@ const Sidebar = () => {
             Buses
           </NavLink>
         </li>
+        {user?.role === 'Admin'?
         <li>
           <NavLink to="/admin/users" className={({ isActive }) => isActive ? 'active' : ''}>
             Users
           </NavLink>
-        </li>
+        </li>:null}
         
       </ul>
     </aside>

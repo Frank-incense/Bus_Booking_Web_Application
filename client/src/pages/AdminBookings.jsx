@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./AdminBookings.css";
 import BookingDetailsModal from "../components/BookingDetailsModal";
 import CustomerDetailsModal from "../components/CustomerDetailsModal";
+import { AuthContext } from "../context/AuthContext";
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -9,6 +10,7 @@ const AdminBookings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const {user} = useContext(AuthContext)
 
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1); // Total pages from backend
@@ -17,18 +19,26 @@ const AdminBookings = () => {
 
   const fetchBookings = async (pageNum) => {
     try {
-      const res = await fetch(`/api/bookings?page=${pageNum}&per_page=${PER_PAGE}`);
+      let url = `/api/bookings?page=${pageNum}&per_page=${PER_PAGE}`;
+
+      // Assuming you have access to the current user's info
+      if (user?.role === 'Driver') {
+        url += `&driver_id=${user.id}`;
+      }
+
+      const res = await fetch(url);
       const data = await res.json();
 
       if (res.ok) {
         setBookings(data.data || []);
-        setPages(data.pages||1);
-        setPage(data.page||1);
+        setPages(data.pages || 1);
+        setPage(data.page || 1);
       }
     } catch (err) {
       console.error("Failed to fetch bookings:", err);
     }
   };
+
 
   useEffect(() => {
     fetchBookings(page);

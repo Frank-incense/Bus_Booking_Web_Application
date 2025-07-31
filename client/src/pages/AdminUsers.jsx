@@ -8,7 +8,7 @@ const AdminUsers = () => {
   const [editingUserId, setEditingUserId] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [lastPage, setLastPage] = useState(1); // Optional: if your API returns total pages
+  const [lastPage, setLastPage] = useState(1); 
   const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState({
     name: "",

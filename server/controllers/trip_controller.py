@@ -49,6 +49,19 @@ class Search(Resource):
 
 class Trips(Resource):
     def get(self):
+        driver_id = request.args.get('driver_id', type=int)
+
+        if driver_id:
+            bus = Bus.query.filter_by(user_id=driver_id).all()
+            trips = []
+            for trip in bus:
+                trips.extend(trip.trips)
+
+            if trips:
+                return make_response([trip.to_dict() for trip in trips], 200)
+        
+            return make_response({'error': 'Trips not found.'})
+
         trips = Trip.query.all()
         if trips:
             return make_response([trip.to_dict() for trip in trips], 200)
@@ -70,6 +83,7 @@ class Trips(Resource):
         db.session.commit()
 
         return make_response(trip.to_dict(), 201)
+    
 class TripById(Resource):
     def patch(self, id):
         data = request.get_json()

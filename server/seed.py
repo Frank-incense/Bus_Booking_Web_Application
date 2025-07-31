@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from app import db  # Your SQLAlchemy db instance
+from app import db
 from models import User, Operator, Bus, Route, Trip, Customer, Booking, Comment  # Import your models
 import random
 

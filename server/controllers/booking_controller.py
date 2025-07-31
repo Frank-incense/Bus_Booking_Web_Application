@@ -10,9 +10,15 @@ class Bookings(Resource):
     def get(self):
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 10, type=int)
+        driver_id = request.args.get('driver_id', type=int)
 
-        # Query and paginate
-        pagination = Booking.query.paginate(page=page, per_page=per_page, error_out=False)
+        query = Booking.query
+
+        # If a driver_id is provided (driver is logged in), filter bookings by driver
+        if driver_id:
+            query = query.filter_by(driver_id=driver_id)
+
+        pagination = query.paginate(page=page, per_page=per_page, error_out=False)
         bookings = pagination.items
 
         if bookings:
@@ -23,7 +29,9 @@ class Bookings(Resource):
                 'per_page': pagination.per_page,
                 'pages': pagination.pages
             }), 200)
-        return make_response(jsonify({'error': 'No bookings found'}))
+
+        return make_response(jsonify({'error': 'No bookings found'}), 404)
+
 
     def post(self):
         data = request.get_json()

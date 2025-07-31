@@ -4,14 +4,16 @@ from flask_restful import Resource
 from server.controllers.image_controller import uploadImage, uploadDocument
 from server.models import User
 from server.config import db
+from flask_mail import Message
 
 
 class Register(Resource):
     def post(self):
+        from server.app import mail
         data = request.form
         print(data['name'])
         if User.query.filter_by(email=data.get('email')).first():
-            return jsonify({'error': 'Email already registered.'}), 409
+            return make_response(jsonify({'error': 'Email already registered.'}), 409)
 
         user = User(
             name=data.get('name'),
@@ -31,5 +33,25 @@ class Register(Resource):
         
         db.session.add(user)
         db.session.commit()
-        
-        return make_response( user.to_dict(), 201)
+        message = Message(subject='Welcome to Journeyhub – Start Managing Your Trips Seamlessly!',sender='support@journeyhub.com',recipients=[user.email])
+        message.body = f'''
+Hi {user.name},
+
+Thank you for signing up to Journeyhub – the smart way to manage and grow your bus operations.
+
+Your registration has been received and is currently under review by our team. We’re ensuring everything is in order so you can enjoy a seamless experience managing your trips and connecting with passengers.
+
+What’s next?
+✅ We’ll review your submitted details
+✅ You’ll receive an email notification once your account is approved
+✅ Upon approval, you can start creating and managing trips from your dashboard
+
+In the meantime, if you have any questions or need to update your registration information, feel free to reach out to us at support@journeyhub.com.
+
+Thank you for your patience, and welcome to the Journeyhub community!
+
+Warm regards,
+The Journeyhub Team
+                    ''' 
+        # mail.send(message)
+        return make_response( jsonify(user.to_dict()), 201)

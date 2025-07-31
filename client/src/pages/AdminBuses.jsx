@@ -13,13 +13,13 @@ const AdminBuses = () => {
   const [currentTrip, setCurrentTrip] = useState(null);
 
   const {user} = useContext(AuthContext)
-  console.log(user)
+  
   useEffect(()=>{
-    const busUrl = user?.role === 'admin' 
+    const busUrl = user?.role === 'Admin' 
         ? '/api/buses' 
         : `/api/buses?driver_id=${user?.id}`;
 
-    const tripUrl = user?.role === 'admin' 
+    const tripUrl = user?.role === 'Admin' 
       ? '/api/trips' 
       : `/api/trips?driver_id=${user?.id}`;
 
@@ -92,7 +92,6 @@ const AdminBuses = () => {
                 <th>Driver</th>
                 <th>Bus</th>
                 <th>Trip Count</th>
-                {/* <th>Arrival</th> */}
                 <th>Status</th>
                 <th>No. of Seats</th>
                 <th>Actions</th>
@@ -104,7 +103,6 @@ const AdminBuses = () => {
                   <td>{bus.user.name}</td>
                   <td>{bus.registration}</td>
                   <td>{bus.trips.length}</td>
-                  {/* <td>{bus.arrival}</td> */}
                   <td className={bus.status === 'Active' ? 'text-success' : 'text-danger'}>
                     {bus.status}
                   </td>
@@ -181,7 +179,7 @@ const AdminBuses = () => {
               </tr>
             </thead>
             <tbody>
-              {trips.map((trip, index) => (
+              {trips?.error? <p>{trips.error}</p>:trips.map((trip, index) => (
                 <tr key={index}>
                   <td>{trip.route.name}</td>
                   <td>{trip.bus.registration}</td>

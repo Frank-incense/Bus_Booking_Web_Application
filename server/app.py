@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory
+from flask_mail import Mail, Message
 from flask_bcrypt import Bcrypt
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
@@ -16,6 +17,7 @@ load_dotenv()
 app = Flask(__name__)
 
 CORS(app, supports_credentials=True)
+mail = Mail(app=app)
 app.config.from_prefixed_env(prefix='FLASK')
 db.init_app(app=app)
 migrate = Migrate(app=app, db=db)
@@ -28,5 +30,3 @@ config = cloudinary.config(secure=True)
 app.register_blueprint(auth_bp)
 addResource(api)
 
-
-# print("****1. Set up and configure the SDK:****\nCredentials: ", config.cloud_name, config.api_key, "\n")

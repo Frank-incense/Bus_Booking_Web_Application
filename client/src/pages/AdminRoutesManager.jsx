@@ -1,11 +1,13 @@
 import RouteModal from '../components/AddRouteModal';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const AdminRoutesManager = () => {
   const [editRoute, setEditRoute] = useState(null);
   const [routes, setRoutes] = useState([])
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('');
+  const {user} = useContext(AuthContext)
 
   function handleEdit(route) {
       setEditRoute(route);
@@ -106,9 +108,9 @@ const AdminRoutesManager = () => {
           <thead className="table-light">
             <tr>
               <th>Route Name</th>
-              <th>Trip</th>
-              <th>Schedule</th>
-              <th>Actions</th>
+              <th>Origin</th>
+              <th>Destination</th>
+              {user?.role==='Admin'?<th>Actions</th>:''}
             </tr>
           </thead>
           <tbody>
@@ -117,11 +119,15 @@ const AdminRoutesManager = () => {
                 <td>{route.name}</td>
                 <td>
                   <span className="text-primary">
-                    {route.origin} – {route.destination}
+                    {route.origin}  
                   </span>
                 </td>
-                <td>{route.schedule || 'Not set'}</td>
                 <td>
+                  <span className="text-primary">
+                  {route.destination}
+                  </span>
+                  </td>
+                {user?.role==='Admin'?<td>
                   <button 
                   className="btn btn-sm btn-outline-primary"
                   onClick={() => handleEdit(route)}
@@ -130,7 +136,7 @@ const AdminRoutesManager = () => {
                   >
                      Edit
                   </button>
-                </td>
+                </td>:null}
               </tr>
             ))}
           </tbody>

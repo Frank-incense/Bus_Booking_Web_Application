@@ -13,15 +13,28 @@ class Bookings(Resource):
         per_page = request.args.get('per_page', 10, type=int)
         driver_id = request.args.get('driver_id', type=int)
 
-        query = Booking.query.options(
-            joinedload(Booking.trip).joinedload(Trip.bus)
-        )
-
+        query = Booking.query
+        
         if driver_id:
-            query = query.join(Booking.trip).join(Trip.bus).filter_by(user_id=driver_id)
+            buses = Bus.query.filter_by(user_id=driver_id).all()
+            trips = []
+            for bus in buses:
+                trips.extend(bus.trips)
+            bookings=[]
+            for trip in trips:
+                print(trip.to_dict())
+                bookings.extend(trip.bookings)
+            
+            if bookings:
+                return make_response([booking.to_dict() for booking in bookings], 200)
+
+            return make_response(jsonify({'error': 'No bookings found'}), 404)
+            
 
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)
         bookings = pagination.items
+
+        print(bookings)
 
         if bookings:
             return make_response(jsonify({
@@ -68,7 +81,8 @@ class Bookings(Resource):
         }
 
         return make_response(booking_data, 201)
-
+    
+class BookById(Resource):
     def put(self, booking_id):
         data = request.get_json()
         booking = Booking.query.get(booking_id)

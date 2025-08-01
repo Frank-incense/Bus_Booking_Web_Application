@@ -46,7 +46,6 @@ const AdminBuses = () => {
         return r.json();
       })
       .then((trips) => {
-        console.log(trips)
         setTrips(trips);
       })
       .catch((error) => {
@@ -55,7 +54,7 @@ const AdminBuses = () => {
       });
 
   },[user])
-    
+    console.log(buses)
   return (
     <div className="container py-4">
       {/* Buses Section */}
@@ -212,10 +211,13 @@ const AdminBuses = () => {
           if (currentTrip) {
             setTrips(prev => prev.map(t => t === currentTrip ? tripData : t));
           } else {
-            setTrips(prev => [...prev, tripData]);
+            setTrips(prev => {
+              return[...prev, tripData]
+            });
           }
         }}
         trip={currentTrip}
+        busses={buses}
       />
     </div>
   );

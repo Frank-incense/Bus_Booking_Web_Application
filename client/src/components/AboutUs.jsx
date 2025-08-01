@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import './AboutUs.css';
 import { AuthContext } from '../context/AuthContext';
+import { useContext } from 'react';
 
 const AboutUs = () => {
   const {images} = useContext(AuthContext)
-  
   const team = [
     {
       image: '/alexander-hipp-iEEBWgY_6lA-unsplash(1).jpg',

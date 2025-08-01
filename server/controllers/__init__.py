@@ -1,7 +1,7 @@
 from server.controllers.authentication import Register
 from server.controllers.admin_controller import Approve, DriverSummary, AdminSummary, BookingStats, PendingApprovals, Driver, Users, UserById
 from server.controllers.image_controller import Images
-from server.controllers.booking_controller import Bookings
+from server.controllers.booking_controller import Bookings, BookById
 from server.controllers.bus_controller import Routes, Buses
 from server.controllers.trip_controller import Trips, TripById, Search
 
@@ -15,6 +15,7 @@ def addResource(api):
     api.add_resource(DriverSummary, '/api/summary/<int:id>')
     api.add_resource(BookingStats, '/api/booking-stats')
     api.add_resource(Bookings, '/api/bookings')
+    api.add_resource(BookById, '/api/bookings/<int:booking_id>')
     api.add_resource(Routes, '/api/routes')
     api.add_resource(Buses, '/api/buses')
     api.add_resource(Trips, '/api/trips')

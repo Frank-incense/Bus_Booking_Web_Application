@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const TripModal = ({ show, onClose, onSave, trip }) => {
+const TripModal = ({ show, onClose, onSave, trip, busses }) => {
     const [formData, setFormData] = useState(trip || {
         route_id: 0,
         bus_id: 0,
@@ -8,6 +8,7 @@ const TripModal = ({ show, onClose, onSave, trip }) => {
         arrival: '',
         cost: 0
     });
+    console.log(busses)
     const [minDate, setMinDate] = useState('');
     const [routes, setRoutes] = useState([]);
     const [buses, setBuses] = useState([]);
@@ -26,8 +27,8 @@ const TripModal = ({ show, onClose, onSave, trip }) => {
         }
         const today = new Date().toISOString().slice(0, 16);
         setMinDate(today);
+        setBuses(busses);
 
-        // Fetch routes
         fetch('/api/routes')
             .then(r => {
                 if (!r.ok) throw new Error('Failed to fetch routes');
@@ -36,14 +37,14 @@ const TripModal = ({ show, onClose, onSave, trip }) => {
             .then(data => setRoutes(data))
             .catch(err => console.error(err));
 
-        // Fetch buses
-        fetch('/api/buses')
-            .then(r => {
-                if (!r.ok) throw new Error('Failed to fetch buses');
-                return r.json();
-            })
-            .then(data => setBuses(data.data || []))
-            .catch(err => console.error(err));
+        // // Fetch buses
+        // fetch('/api/buses')
+        //     .then(r => {
+        //         if (!r.ok) throw new Error('Failed to fetch buses');
+        //         return r.json();
+        //     })
+        //     .then(data => setBuses(data.data || []))
+        //     .catch(err => console.error(err));
 
     }, [trip]);
 
@@ -95,9 +96,11 @@ const TripModal = ({ show, onClose, onSave, trip }) => {
                             {/* Bus Selector */}
                             <select name="bus_id" value={formData.bus_id} onChange={handleChange} className="form-control mb-2" required>
                                 <option value="">Select Bus</option>
-                                {buses.map(bus => (
+                                {buses.map(bus => {
+                                    console.log(bus)
+                                    return(
                                     <option key={bus.id} value={bus.id}>{bus.registration}</option>
-                                ))}
+                                )})}
                             </select>
 
                             <input

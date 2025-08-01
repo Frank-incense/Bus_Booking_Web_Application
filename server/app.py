@@ -14,7 +14,7 @@ from server.routes.auth import auth_bp
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../client/dist", static_url_path="/")
 
 CORS(app, supports_credentials=True)
 mail = Mail(app=app)

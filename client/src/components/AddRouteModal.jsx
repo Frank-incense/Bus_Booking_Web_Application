@@ -16,7 +16,6 @@ function RouteModal({ onPost, routeToEdit, onUpdate, handleCancel }){
         if (routeToEdit) {
             setFormData(routeToEdit);
         } else {
-            console.log('Posting')
             setFormData({ 
                 name: '', 
                 origin: '', 

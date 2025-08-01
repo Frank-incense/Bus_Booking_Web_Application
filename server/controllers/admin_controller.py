@@ -35,15 +35,16 @@ class DriverSummary(Resource):
         bookings = []
         for booking in trips:
             bookings.extend(booking.bookings)
-
+        
         routes = [route for route in trips]
-
-        return make_response(jsonify({
-            'trips': [trip.to_dict() for trip in trips],
+        print(trips)
+        res = jsonify({
+            'trips': [trip.to_dict() for trip in [trip.to_dict()for trip in trips]],
             'revenue': sum(trip.cost for trip in trips),
             'bookings': len(bookings),
             'routes': len(routes)
-        }), 200)
+        })
+        return make_response(res, 200)
     
 class Approve(Resource):
     def patch(self, id):

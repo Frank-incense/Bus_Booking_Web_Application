@@ -11,15 +11,26 @@ const BusModal = ({ show, onClose, onSave, bus, user }) => {
     status: '',
     seats: ''
   });
-  console.log(formData.driver)
+  
   const [busImage, setBusImage] = useState(null);
 
   useEffect(() => {
     if (bus) {
-      setFormData(bus);
+      setFormData({
+        driver: isDriver ? user.name : '',
+        bus: bus.registration,
+        operator: '',
+        status: bus.status,
+        seats: bus.no_of_seats
+      });
     } else if (isDriver) {
-      // Ensure driver name is pre-filled
-      setFormData(prev => ({ ...prev, driver: user.name }));
+      setFormData({
+        driver: isDriver ? user.name : '',
+        bus: '',
+        operator: '',
+        status: '',
+        seats: ''
+      });
     }
   }, [bus, user, isDriver]);
 

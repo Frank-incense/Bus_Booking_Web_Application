@@ -199,9 +199,9 @@ const AdminDashboard = () => {
                   {summary.trips?.map((trip, i) => (
                     <tr key={i}>
                       <td>{trip.id}</td>
-                      <td>{trip.destination}</td>
-                      <td>{trip.departure_time}</td>
-                      <td>{trip.status}</td>
+                      <td>{trip.route.destination}</td>
+                      <td>{trip.departure}</td>
+                      <td>{trip.bus.status}</td>
                     </tr>
                   ))}
                 </tbody>

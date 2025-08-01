@@ -23,10 +23,16 @@ function SearchPage() {
   };
 
   const fetchResults = async (query) => {
-    const res = await fetch(`/api/search?${new URLSearchParams(query)}`);
-    const data = await res.json();
-    setResults(data);
+    try {
+      const res = await fetch(`/api/search?${new URLSearchParams(query)}`);
+      const data = await res.json();
+      setResults(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Failed to fetch search results:", error);
+      setResults([]);
+    }
   };
+
 
   useEffect(() => {
     const query = getQueryParams();
@@ -40,12 +46,6 @@ function SearchPage() {
       <TripSearchBar />
       <div className="container">
         <div className="row">
-          {/* <div className="col-md-3">
-            <TripFilterSidebar filters={filters} setFilters={setFilters} />
-          </div>
-          <div className="col-md-9">
-            
-          </div> */}
           <TripResultsList trips={results} onBook={setSelectedTrip}/>
         </div>
       </div>

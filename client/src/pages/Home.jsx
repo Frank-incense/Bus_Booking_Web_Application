@@ -29,12 +29,7 @@ const Home = () => {
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero-section">
-        <img
-          src='/passport-3713945_640.jpg'
-          alt="Bus on a road"
-          className="hero-image"
-        />
-        {/* <Carousel images={images}/> */}
+          
       </section>
       
 

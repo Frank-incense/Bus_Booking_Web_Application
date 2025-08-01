@@ -37,9 +37,9 @@ class DriverSummary(Resource):
             bookings.extend(booking.bookings)
         
         routes = [route for route in trips]
-        print(trips)
+    
         res = jsonify({
-            'trips': [trip.to_dict() for trip in [trip.to_dict()for trip in trips]],
+            'trips':  [trip.to_dict()for trip in trips],
             'revenue': sum(trip.cost for trip in trips),
             'bookings': len(bookings),
             'routes': len(routes)

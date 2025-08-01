@@ -39,7 +39,7 @@ class DriverSummary(Resource):
         routes = [route for route in trips]
 
         return make_response(jsonify({
-            'trips': trips,
+            'trips': [trip.to_dict() for trip in trips],
             'revenue': sum(trip.cost for trip in trips),
             'bookings': len(bookings),
             'routes': len(routes)

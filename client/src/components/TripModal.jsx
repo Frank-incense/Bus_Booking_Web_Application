@@ -13,7 +13,17 @@ const TripModal = ({ show, onClose, onSave, trip }) => {
     const [buses, setBuses] = useState([]);
 
     useEffect(() => {
-        if (trip) setFormData(trip);
+        if (trip) {
+            setFormData(trip)
+        }else{
+            setFormData({
+            route_id: 0,
+            bus_id: 0,
+            departure: '',
+            arrival: '',
+            cost: 0
+            })
+        }
         const today = new Date().toISOString().slice(0, 16);
         setMinDate(today);
 

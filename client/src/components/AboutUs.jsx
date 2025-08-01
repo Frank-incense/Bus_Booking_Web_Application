@@ -1,9 +1,6 @@
 import './AboutUs.css';
-import { AuthContext } from '../context/AuthContext';
-import { useContext } from 'react';
 
 const AboutUs = () => {
-  const {images} = useContext(AuthContext)
   const team = [
     {
       image: '/alexander-hipp-iEEBWgY_6lA-unsplash(1).jpg',
@@ -57,7 +54,7 @@ const AboutUs = () => {
           </p>
         </div>
         <div>
-          <img className="journey-image" src={images?.static[0].image_url} alt="" />
+          <img className="journey-image" src="/passport-3713945_640.jpg" alt="Image" />
         </div>
       </section>
 

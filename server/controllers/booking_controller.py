@@ -16,25 +16,35 @@ class Bookings(Resource):
         query = Booking.query
         
         if driver_id:
+            # Get all buses by the driver
             buses = Bus.query.filter_by(user_id=driver_id).all()
             trips = []
             for bus in buses:
                 trips.extend(bus.trips)
-            bookings=[]
-            for trip in trips:
-                print(trip.to_dict())
-                bookings.extend(trip.bookings)
             
+            bookings = []
+            for trip in trips:
+                bookings.extend(trip.bookings)
+
             if bookings:
-                return make_response([booking.to_dict() for booking in bookings], 200)
+                total = len(bookings)
+                start = (page - 1) * per_page
+                end = start + per_page
+                paginated_bookings = bookings[start:end]
+
+                return make_response(jsonify({
+                    'data': [booking.to_dict() for booking in paginated_bookings],
+                    'total': total,
+                    'page': page,
+                    'per_page': per_page,
+                    'pages': (total + per_page - 1) // per_page
+                }), 200)
 
             return make_response(jsonify({'error': 'No bookings found'}), 404)
-            
 
+        # Default response for admins/managers/etc
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)
         bookings = pagination.items
-
-        print(bookings)
 
         if bookings:
             return make_response(jsonify({
@@ -46,6 +56,7 @@ class Bookings(Resource):
             }), 200)
 
         return make_response(jsonify({'error': 'No bookings found'}), 404)
+
 
 
     def post(self):

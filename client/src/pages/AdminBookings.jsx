@@ -32,6 +32,7 @@ const AdminBookings = () => {
       if (res.ok) {
         
         setBookings(data.data);
+
         setPages(data.pages || 1);
         setPage(data.page || 1);
       }

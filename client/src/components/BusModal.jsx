@@ -16,12 +16,13 @@ const BusModal = ({ show, onClose, onSave, bus, user }) => {
 
   useEffect(() => {
     if (bus) {
-      setFormData(prev=>({
-        ...prev,
+      setFormData({
+        driver: isDriver ? user.name : '',
         bus: bus.registration,
+        operator: '',
         status: bus.status,
         seats: bus.no_of_seats
-      }));
+      });
     } else if (isDriver) {
       setFormData({
         driver: isDriver ? user.name : '',

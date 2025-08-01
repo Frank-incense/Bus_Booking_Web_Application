@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchBookings, updateBooking, deleteBooking } from '../api/bookings';
 
 const BookingPage = () => {
@@ -131,4 +131,4 @@ const BookingPage = () => {
   );
 };
 
-export default UserBookingPage;
+export default BookingPage;

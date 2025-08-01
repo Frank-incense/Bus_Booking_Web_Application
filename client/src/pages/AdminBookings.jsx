@@ -30,7 +30,7 @@ const AdminBookings = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setBookings(data.data);
+        setBookings(data.data || []);
         setPages(data.pages || 1);
         setPage(data.page || 1);
       }

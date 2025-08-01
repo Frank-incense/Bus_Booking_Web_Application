@@ -25,25 +25,46 @@ const AdminDashboard = () => {
   
   useEffect(()=>{
     fetch('/api/drivers')
-    .then(r=>r.json())
-    .then(users=>setUsers(users))
+    .then(r => r.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        setUsers(data);
+      } else if (Array.isArray(data.data)) {
+        setUsers(data.data);
+      } else if (Array.isArray(data.users)) {
+        setUsers(data.users);
+      } else {
+        console.error("Unexpected users format:", data);
+        setUsers([]);
+      }
+    })
+    .catch(err => {
+      console.error("Failed to fetch users:", err);
+      setUsers([]);
+    });
+
 
     
 
     if (user?.role === 'Admin'){
       fetch('/api/summary')
-    .then(r=>r.json())
-    .then(data=>setSummary(data))
+    .then(r=>{
+      if (r.ok){
+        r.json()
+      }
+    })
+    .then(data=>setSummary(data||[]))
+
     }
     else{
       fetch(`/api/summary/${user.id}`)
     .then(r=>r.json())
-    .then(data=>setSummary(data))
+    .then(data=>setSummary(data||[]))
     }
   
     fetch('/api/pending?page=1&limit=4')
     .then(r=>r.json())
-    .then(users=>setPending(users.data))
+    .then(users=>setPending(users.data||[]))
 
   },[])
   function handleApprove(user){

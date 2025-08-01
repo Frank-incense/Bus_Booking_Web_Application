@@ -15,7 +15,7 @@ const CustomerDetailsModal = ({ customer, onClose }) => {
         <div className="info-group"><strong>Phone:</strong> {customer.customer.phone}</div>
         <div className="info-group"><strong>ID/Passport:</strong> {customer.customer.identification}</div>
         <div className="info-group"><strong>Nationality:</strong> {customer.customer.nationality}</div>
-        <div className="info-group"><strong>Seat Number:</strong> {customer.seatc}</div>
+        <div className="info-group"><strong>Seat Number:</strong> {customer.seat}</div>
       </div>
     </div>
   );

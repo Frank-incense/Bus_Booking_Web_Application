@@ -18,11 +18,11 @@ const LoginForm = () => {
     try {
       await login(form);
       navigate("/admin");
-    } catch (err) {
-      setError(err);
+    } catch (err) { 
+      
+      setError('Invalid email or password');
     }
   };
-
   return (
     <div className="container mt-5" style={{ maxWidth: "500px" }}>
       <h2 className="mb-4 text-center">Login</h2>

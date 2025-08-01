@@ -31,7 +31,7 @@ const AdminBuses = () => {
         return r.json();
       })
       .then((buses) => {
-        setBuses(buses.data);
+        setBuses(buses.data||[]);
       })
       .catch((error) => {
         console.error("Error fetching buses:", error.message);
@@ -45,14 +45,21 @@ const AdminBuses = () => {
         }
         return r.json();
       })
-      .then((trips) => {
-        console.log(trips)
-        setTrips(trips);
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setTrips(data);
+        } else if (Array.isArray(data.data)) {
+          setTrips(data.data);
+        } else {
+          console.error("Unexpected trips format:", data);
+          setTrips([]);
+        }
       })
       .catch((error) => {
         console.error("Error fetching trips:", error.message);
-        // Optionally show an error message to the user
+        setTrips([]); 
       });
+
 
   },[user])
     

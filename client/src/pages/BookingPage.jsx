@@ -1,134 +1,150 @@
-import React, { useEffect, useState } from 'react';
-import { fetchBookings, updateBooking, deleteBooking } from '../api/bookings';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { countries } from "countries-list";
 
-const BookingPage = () => {
-  const [bookings, setBookings] = useState([]);
-  const [editingBooking, setEditingBooking] = useState(null);
-  const [seat, setSeat] = useState('');
-  const [status, setStatus] = useState('');
+const nationality = []
 
-  useEffect(() => {
-    loadBookings();
-  }, []);
+for (let country in countries){
+  nationality.push(countries[country].name)
+}
+function UserBookingPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const loadBookings = async () => {
+  // Expected to come from previous step
+  const { tripId, selectedSeats } = location.state || {};
+  const [passengerData, setPassengerData] = useState(
+    selectedSeats.map(() => ({
+        firstName: "",
+        secondName: "",
+        email: "",
+        phone: "",
+        identification: "",
+        nationality: ""
+    }))
+    );
+
+    const handlePassengerChange = (index, e) => {
+        const updated = [...passengerData];
+        updated[index][e.target.name] = e.target.value;
+        setPassengerData(updated);
+    };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
     try {
-      const data = await fetchBookings();
-      setBookings(data.data || []);
-    } catch (error) {
-      alert('Failed to load bookings');
+        const requests = passengerData.map((passenger, i) =>
+        axios.post("/api/bookings", {
+            ...passenger,
+            seat: selectedSeats[i],
+            trip_id: tripId,
+        })
+        );
+        await Promise.all(requests);
+        alert("Booking successful!");
+        navigate("/");
+    } catch (err) {
+        console.error(err);
+        alert("Booking failed.");
     }
-  };
+    };
 
-  const handleEditClick = (booking) => {
-    setEditingBooking(booking);
-    setSeat(booking.seat);
-    setStatus(booking.status);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingBooking(null);
-    setSeat('');
-    setStatus('');
-  };
-
-  const handleSaveEdit = async () => {
-    try {
-      await updateBooking(editingBooking.id, { seat, status });
-      alert('Booking updated successfully');
-      setEditingBooking(null);
-      loadBookings();
-    } catch (error) {
-      alert('Failed to update booking');
-    }
-  };
-
-  const handleDelete = async (bookingId) => {
-    if (!window.confirm('Are you sure you want to delete this booking?')) return;
-    try {
-      await deleteBooking(bookingId);
-      alert('Booking deleted successfully');
-      loadBookings();
-    } catch (error) {
-      alert('Failed to delete booking');
-    }
-  };
 
   return (
-    <div className="container py-4">
-      <h2>Your Bookings</h2>
-      {bookings.length === 0 ? (
-        <p>No bookings found.</p>
-      ) : (
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Trip ID</th>
-              <th>Seat</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map((booking) => (
-              <tr key={booking.id}>
-                <td>{booking.trip_id}</td>
-                <td>{booking.seat}</td>
-                <td>{booking.status}</td>
-                <td>
-                  <button className="btn btn-sm btn-primary me-2" onClick={() => handleEditClick(booking)}>
-                    Edit
-                  </button>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(booking.id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+    <div className="container mt-4">
+      <h3>Complete Your Booking</h3>
+      <p>Trip ID: {tripId}</p>
+      <p>Selected Seats: {selectedSeats.join(", ")}</p>
 
-      {editingBooking && (
-        <div className="modal show d-block" tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Edit Booking</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={handleCancelEdit}></button>
-              </div>
-              <div className="modal-body">
-                <div className="mb-3">
-                  <label className="form-label">Seat</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={seat}
-                    onChange={(e) => setSeat(e.target.value)}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Status</label>
-                  <select className="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value="Booked">Booked</option>
-                    <option value="Cancelled">Cancelled</option>
-                  </select>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCancelEdit}>
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-primary" onClick={handleSaveEdit}>
-                  Save changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <form onSubmit={handleBooking}>
+  {passengerData.map((passenger, idx) => (
+    <div key={idx} className="border rounded p-3 mb-4">
+      <h5>Passenger {idx + 1} - Seat {selectedSeats[idx]}</h5>
+
+      <div className="form-group">
+        <label>First Name</label>
+        <input
+          type="text"
+          name="firstName"
+          className="form-control"
+          value={passenger.firstName}
+          onChange={(e) => handlePassengerChange(idx, e)}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Second Name</label>
+        <input
+          type="text"
+          name="secondName"
+          className="form-control"
+          value={passenger.secondName}
+          onChange={(e) => handlePassengerChange(idx, e)}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          className="form-control"
+          value={passenger.email}
+          onChange={(e) => handlePassengerChange(idx, e)}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Phone</label>
+        <input
+          type="tel"
+          name="phone"
+          className="form-control"
+          value={passenger.phone}
+          onChange={(e) => handlePassengerChange(idx, e)}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Identification</label>
+        <input
+          type="text"
+          name="identification"
+          className="form-control"
+          value={passenger.identification}
+          onChange={(e) => handlePassengerChange(idx, e)}
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Nationality</label>
+        <select
+          name="nationality"
+          className="form-control"
+          value={passenger.nationality}
+          onChange={(e) => handlePassengerChange(idx, e)}
+          required
+        >
+          <option value="">Select your country</option>
+          {nationality.map((country, index) => (
+            <option key={index} value={country}>{country}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+  ))}
+
+  <button type="submit" className="btn btn-primary">Confirm Booking</button>
+</form>
+
     </div>
   );
-};
+}
 
-export default BookingPage;
+export default UserBookingPage;

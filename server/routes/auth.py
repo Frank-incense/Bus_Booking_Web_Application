@@ -57,7 +57,7 @@ def login():
         return jsonify({'error': 'Email and password are required'}), 400
 
     user = User.query.filter_by(email=email).first()
-    print(user)
+    
     if not user:
         logging.warning(f"Login failed: User with email {email} not found")
         return jsonify({'error': 'Invalid email or password'}), 401

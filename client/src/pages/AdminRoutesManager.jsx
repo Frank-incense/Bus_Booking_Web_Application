@@ -13,13 +13,25 @@ const AdminRoutesManager = () => {
       setEditRoute(route);
   }
   
-  useEffect(()=>{
+  useEffect(() => {
     fetch('/api/routes')
-    .then(r=>r.json())
-    .then(routes=>{
-      setRoutes(routes)
-    })
-  },[])
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setRoutes(data);
+        } else if (data.routes && Array.isArray(data.routes)) {
+          setRoutes(data.routes);
+        } else {
+          console.error("Unexpected data structure:", data);
+          setRoutes([]);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch routes:", err);
+        setRoutes([]);
+      });
+  }, []);
+
 
   function handleUpdate(updatedRoute) {
       setRoutes(prev =>

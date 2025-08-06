@@ -10,7 +10,7 @@ from server.config import db
 import cloudinary
 from server.controllers import addResource
 from server.routes.auth import auth_bp
-import os
+
 
 
 load_dotenv()

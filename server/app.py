@@ -31,13 +31,7 @@ config = cloudinary.config(secure=True)
 app.register_blueprint(auth_bp)
 addResource(api)
 
-@app.route('/')
-def serve_index():
-    return send_from_directory(app.static_folder, 'index.html')
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, "index.html")
 
-@app.route('/<path:path>')
-def serve_react(path):
-    if os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
